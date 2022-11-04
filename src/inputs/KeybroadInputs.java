@@ -11,10 +11,8 @@ public class KeybroadInputs implements KeyListener {
     private GamePanel gamePanel;
 
 
-    public KeybroadInputs(GamePanel gamePanel) {
-//        this.game = game;
+    public KeybroadInputs(GamePanel gamePanel, Character[] player) {
         this.gamePanel = gamePanel;
-
     }
 
     @Override
