@@ -1,41 +1,38 @@
 package inputs;
 
+
 import characters.Character;
-import main.Game;
 import main.GamePanel;
+import utilz.Constants;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeybroadInputs implements KeyListener {
+public class KeybroadInputs implements KeyListener, Constants {
     private GamePanel gamePanel;
 
-
-    public KeybroadInputs(GamePanel gamePanel, Character[] player) {
+    public KeybroadInputs(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+        System.out.println("Key Type");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_W:
-               System.out.println("W");
-               gamePanel.setRectPos(gamePanel.getXRect(), gamePanel.getYDelta()-20);
-               break;
-            case KeyEvent.VK_S:
-                System.out.println("S");
-            case KeyEvent.VK_A:
-                System.out.println("A");
-                break;
-            case KeyEvent.VK_D:
-                System.out.println("D");
-                break;
-
+        Character Player[] = gamePanel.getGame().getPlayer();
+        for (int i =0; i<Player.length; i++){
+            if (e.getKeyCode()==Player[i].getUpCtrl()){
+                Player[i].setUp(true);
+            }else if (e.getKeyCode()==Player[i].getDownCtrl()){
+                Player[i].setDown(true);
+            }else if (e.getKeyCode()==Player[i].getLeftCtrl()){
+                Player[i].setLeft(true);
+            }else if (e.getKeyCode()==Player[i].getRightCtrl()){
+                Player[i].setRight(true);
+            }
         }
 
 
@@ -43,7 +40,17 @@ public class KeybroadInputs implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-
+        Character Player[] = gamePanel.getGame().getPlayer();
+        for (int i =0; i<Player.length; i++){
+            if (e.getKeyCode()==Player[i].getUpCtrl()){
+                Player[i].setUp(false);
+            }else if (e.getKeyCode()==Player[i].getDownCtrl()){
+                Player[i].setDown(false);
+            }else if (e.getKeyCode()==Player[i].getLeftCtrl()){
+                Player[i].setLeft(false);
+            }else if (e.getKeyCode()==Player[i].getRightCtrl()){
+                Player[i].setRight(false);
+            }
+        }
     }
 }
