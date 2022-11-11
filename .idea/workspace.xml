@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dffac82-9c31-47d8-a937-6ef60eff0cb8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utilz/Constants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/level_one_data.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/outside_sprites.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/characters/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/levels/Level.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/levels/LevelManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utilz/HelpMethods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utilz/LoadSave.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dabde_v1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Dabde_v1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/characters/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/CharacterConst.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/GamePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/GameWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/MainClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/MainClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/res/pGGbv.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/pGGbv.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utilz/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/Constants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,12 +47,13 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Java/Dabde_v1&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Java/Dabde_v1/res&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Java\Dabde_v1\res" />
       <recent name="D:\Java\Dabde_v1\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">

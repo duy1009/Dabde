@@ -1,6 +1,9 @@
 package characters;
 
+import levels.LevelManager;
+import main.Game;
 import utilz.Constants;
+import utilz.LoadSave;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,11 +11,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Character implements Constants {
-    private float x, y; // pos
+import static utilz.Constants.*;
+import static utilz.HelpMethods.CanMoveHere;
+
+public class Character extends Entity{
     private boolean alive;
     private int team;
     public int moving, playerAction = IDLE, playerDir=-1;
+    private float xDrawOffet = 18* Game.SCALE;
+    private float yDrawOffet = 4* Game.SCALE;
     private int up_ctrl, down_ctrl, left_ctrl, right_ctrl; // controller key
     private boolean up = false, down =false, left = false, right = false;
     private BufferedImage img;
@@ -20,20 +27,24 @@ public class Character implements Constants {
     private int aniTick = 0, aniIndex = 0, aniSpeed = 15;   // frame update an animation
     public int ani_row_max, ani_col_max, chr_w, chr_h;
     private float playerSpeed = 2f;
+    private static int mapData[][];
 
-    public Character(float x, float y,
+    public Character(float x, float y,int width, int height,
                      int team,
                      int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
                      String animation_path,
                      int ani_row_max, int ani_col_max) // pixel
     {
+        super(x,y,width, height);
         setControl(ctrl);
         this.x = x; this.y = y;
         this.ani_col_max = ani_col_max; this.ani_row_max = ani_row_max;
         this.team = team;
         this.alive = true;
-        importImg(animation_path);
-        loadAnimation();
+
+        loadAnimation(animation_path);
+        initHitBox(x, y, width*Game.SCALE, height* Game.SCALE);
+
     }
     public void setPos(float x, float y){
         this.x = x;
@@ -46,18 +57,27 @@ public class Character implements Constants {
         return alive;
     }
 
-    private void loadAnimation() {
+    private void loadAnimation(String path) {
+        img = LoadSave.GetSpriteAtlas(path);
+        this.chr_h = (int)(img.getHeight()/ani_row_max);
+        this.chr_w = (int)(img.getWidth()/ani_col_max);
         Animations = new BufferedImage[ani_row_max][ani_col_max];
         for(int i=0; i< Animations.length;i++) // load animation first
             for(int j=0;j < Animations[i].length;j++){
                 Animations[i][j] = img.getSubimage(j * chr_w, i * chr_h, chr_w, chr_h);
             }
+
+    }
+    public static void loadMapData(int[][] mapDt){
+        mapData = mapDt;
     }
 
     public void update(){
+        updatePos();
+//        updateHitBox();
         updateAnimationTick();
         setAnimations();
-        updatePos();
+
     }
     public void updateAnimationTick() {
         aniTick++;
@@ -86,7 +106,10 @@ public class Character implements Constants {
         aniIndex = 0;
     }
     public void render(Graphics g){
-        g.drawImage(Animations[playerAction][aniIndex].getSubimage(0,0,chr_w,chr_h),(int)x,(int)y,null);
+//        g.drawImage(Animations[playerAction][aniIndex].getSubimage(0,0,chr_w,chr_h),(int)x,(int)y,null);
+        g.drawImage(Animations[playerAction][aniIndex], (int) (hitBox.x - xDrawOffet ), (int) (hitBox.y - yDrawOffet ),(int)width,(int)height, null);
+
+        drawHitBox(g);
     }
     public void updatePos(){
         moving = 0;
@@ -108,17 +131,7 @@ public class Character implements Constants {
             }
 //        }
     }
-    public void importImg(String path){
-        InputStream is = getClass().getResourceAsStream(path);
-        try{
-            img = ImageIO.read(is);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        this.chr_h = (int)(img.getHeight()/ani_row_max);
-        this.chr_w = (int)(img.getWidth()/ani_col_max);
 
-    }
     public void setControl(int[] ctrl){
         this.up_ctrl = ctrl[0];
         this.down_ctrl = ctrl[1];
@@ -134,16 +147,20 @@ public class Character implements Constants {
     public void setLeft(boolean val){this.left = val;}
     public void setRight(boolean val){this.right = val;}
     public void up(){
-        y-=playerSpeed;
+        if(CanMoveHere(hitBox.x,hitBox.y-playerSpeed,hitBox.width,hitBox.height, mapData))
+            hitBox.y-=playerSpeed;
     }
     public void down(){
-        y+=playerSpeed;
+        if(CanMoveHere(hitBox.x,hitBox.y+playerSpeed,hitBox.width,hitBox.height, mapData))
+            hitBox.y+=playerSpeed;
     }
     public void left(){
-        x-=playerSpeed;
+        if(CanMoveHere(hitBox.x-playerSpeed,hitBox.y,hitBox.width,hitBox.height, mapData))
+            hitBox.x-=playerSpeed;
     }
     public void right(){
-        x+=playerSpeed;
+        if(CanMoveHere(hitBox.x+playerSpeed,hitBox.y,hitBox.width,hitBox.height, mapData))
+            hitBox.x+=playerSpeed;
     }
     public void resetDir(){
         up = false;
