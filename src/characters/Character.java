@@ -1,15 +1,12 @@
 package characters;
 
-import levels.LevelManager;
+
 import main.Game;
-import utilz.Constants;
+
 import utilz.LoadSave;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static utilz.Constants.*;
 import static utilz.HelpMethods.CanMoveHere;
@@ -18,18 +15,20 @@ public class Character extends Entity{
     private boolean alive;
     private int team;
     public int moving, playerAction = IDLE, playerDir=-1;
-    private float xDrawOffet = 18* Game.SCALE;
-    private float yDrawOffet = 4* Game.SCALE;
+    private float xDrawOffet;
+    private float yDrawOffet;
     private int up_ctrl, down_ctrl, left_ctrl, right_ctrl; // controller key
     private boolean up = false, down =false, left = false, right = false;
     private BufferedImage img;
     private BufferedImage[][] Animations;
     private int aniTick = 0, aniIndex = 0, aniSpeed = 15;   // frame update an animation
-    public int ani_row_max, ani_col_max, chr_w, chr_h;
+    public int ani_row_max, ani_col_max;
+    float chr_w, chr_h;
     private float playerSpeed = 2f;
     private static int mapData[][];
 
     public Character(float x, float y,int width, int height,
+                     float HB_x, float HB_y,float HB_width, float HB_height,
                      int team,
                      int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
                      String animation_path,
@@ -43,7 +42,12 @@ public class Character extends Entity{
         this.alive = true;
 
         loadAnimation(animation_path);
-        initHitBox(x, y, width*Game.SCALE, height* Game.SCALE);
+        this.xDrawOffet = HB_x* width * Game.SCALE / chr_w;;
+        this.yDrawOffet = HB_y* height * Game.SCALE / chr_h;
+
+        initHitBox(x, y, HB_width* width *Game.SCALE / chr_w, HB_height* height* Game.SCALE / chr_h);
+
+        System.out.println(hitBox.width + " " + hitBox.height);
 
     }
     public void setPos(float x, float y){
@@ -59,12 +63,12 @@ public class Character extends Entity{
 
     private void loadAnimation(String path) {
         img = LoadSave.GetSpriteAtlas(path);
-        this.chr_h = (int)(img.getHeight()/ani_row_max);
-        this.chr_w = (int)(img.getWidth()/ani_col_max);
+        this.chr_h = img.getHeight()/ani_row_max;
+        this.chr_w = img.getWidth()/ani_col_max;
         Animations = new BufferedImage[ani_row_max][ani_col_max];
         for(int i=0; i< Animations.length;i++) // load animation first
             for(int j=0;j < Animations[i].length;j++){
-                Animations[i][j] = img.getSubimage(j * chr_w, i * chr_h, chr_w, chr_h);
+                Animations[i][j] = img.getSubimage((int)(j * chr_w), (int)(i * chr_h), (int)chr_w, (int)chr_h);
             }
 
     }
@@ -74,7 +78,6 @@ public class Character extends Entity{
 
     public void update(){
         updatePos();
-//        updateHitBox();
         updateAnimationTick();
         setAnimations();
 

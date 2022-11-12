@@ -19,7 +19,9 @@ public interface Constants {
     public static final int OUT_SIDE_HEIGHT = 4;
     public static final int OUT_SIDE_WIDTH = 12;
     public static final int OUT_SIDE_ONE_BLOCK = 32; // pixel
+    public static final int X_OFFSET_PLAYER = 18;
+    public static final int Y_OFFSET_PLAYER = 4;
 
-    public static final int[] COLLISION_VALUE = {1,2, 4, 5, 12, 13, 14, 16, 17, 25, 39};
+    public static final int[] COLLISION_VALUE = {0, 1, 2, 4, 5, 12, 13, 14, 16, 17, 25, 39};
 
 }

@@ -8,7 +8,7 @@ import utilz.Constants;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeybroadInputs implements KeyListener, Constants {
+public class KeybroadInputs implements KeyListener{
     private GamePanel gamePanel;
 
     public KeybroadInputs(GamePanel gamePanel) {

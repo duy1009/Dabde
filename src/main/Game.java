@@ -2,14 +2,11 @@ package main;
 
 import characters.Character;
 import levels.LevelManager;
-import utilz.Constants;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import static utilz.Constants.CATCHING_TEAM;
-import static utilz.Constants.RUNNING_TEAM;
+import static utilz.Constants.*;
 
 public class Game implements Runnable{
     private GameWindow gameWindow;
@@ -42,11 +39,13 @@ public class Game implements Runnable{
                 KeyEvent.VK_A,
                 KeyEvent.VK_D};
         player[0] = new Character(
-                200f,100f, 32,50,
+                200f,100f, 32*2,50*2,
+                X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 CATCHING_TEAM,
                 keyBroad_player_1,
-                Constants.PLAYER_1_ATLAS,
+                PLAYER_1_ATLAS,
                 4, 12);
+
         int[] keyBroad_player_2 = {
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
@@ -54,9 +53,10 @@ public class Game implements Runnable{
                 KeyEvent.VK_RIGHT};
         player[1] = new Character(
                 100f,100f, 32,50,
+                X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 RUNNING_TEAM,
                 keyBroad_player_2,
-                Constants.PLAYER_2_ATLAS,
+                PLAYER_2_ATLAS,
                 4, 12);
     }
     private void initClass(){
