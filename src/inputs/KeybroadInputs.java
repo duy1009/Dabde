@@ -17,7 +17,7 @@ public class KeybroadInputs implements KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("Key Type");
+//        System.out.println("Key Type");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class KeybroadInputs implements KeyListener{
         Character Player[] = gamePanel.getGame().getPlayer();
         for (int i =0; i<Player.length; i++){
             if (e.getKeyCode()==Player[i].getUpCtrl()){
-                Player[i].setUp(true);
+                Player[i].setJump(true);
             }else if (e.getKeyCode()==Player[i].getDownCtrl()){
                 Player[i].setDown(true);
             }else if (e.getKeyCode()==Player[i].getLeftCtrl()){
@@ -33,6 +33,7 @@ public class KeybroadInputs implements KeyListener{
             }else if (e.getKeyCode()==Player[i].getRightCtrl()){
                 Player[i].setRight(true);
             }
+
         }
 
 
@@ -43,7 +44,7 @@ public class KeybroadInputs implements KeyListener{
         Character Player[] = gamePanel.getGame().getPlayer();
         for (int i =0; i<Player.length; i++){
             if (e.getKeyCode()==Player[i].getUpCtrl()){
-                Player[i].setUp(false);
+                Player[i].setJump(false);
             }else if (e.getKeyCode()==Player[i].getDownCtrl()){
                 Player[i].setDown(false);
             }else if (e.getKeyCode()==Player[i].getLeftCtrl()){

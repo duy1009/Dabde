@@ -21,7 +21,7 @@ public class LevelManager {
     public void importOutSide(){
         BufferedImage img = LoadSave.GetSpriteAtlas(LEVEL_ATLAS);
         levelSprite = new BufferedImage[OUT_SIDE_HEIGHT*OUT_SIDE_WIDTH];
-        int ob = OUT_SIDE_ONE_BLOCK;
+        int ob = Game.TILES_DEFAULT_SIZE;
         for(int i=0;i<OUT_SIDE_HEIGHT;i++){
             for(int j=0;j<OUT_SIDE_WIDTH;j++){
                 int index = i*OUT_SIDE_WIDTH+j;

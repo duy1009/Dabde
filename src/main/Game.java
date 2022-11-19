@@ -39,7 +39,7 @@ public class Game implements Runnable{
                 KeyEvent.VK_A,
                 KeyEvent.VK_D};
         player[0] = new Character(
-                200f,100f, 32*2,50*2,
+                100f,100f, 32*2,50*2,
                 X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 CATCHING_TEAM,
                 keyBroad_player_1,

@@ -9,23 +9,32 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.*;
-import static utilz.HelpMethods.CanMoveHere;
+import static utilz.HelpMethods.*;
 
 public class Character extends Entity{
     private boolean alive;
     private int team;
     public int moving, playerAction = IDLE, playerDir=-1;
-    private float xDrawOffet;
-    private float yDrawOffet;
+    private float playerSpeed = 1.5f;
     private int up_ctrl, down_ctrl, left_ctrl, right_ctrl; // controller key
-    private boolean up = false, down =false, left = false, right = false;
+    private boolean up = false, down =false, left = false, right = false, jump =false;
+
+    // Animation
     private BufferedImage img;
     private BufferedImage[][] Animations;
     private int aniTick = 0, aniIndex = 0, aniSpeed = 15;   // frame update an animation
     public int ani_row_max, ani_col_max;
     float chr_w, chr_h;
-    private float playerSpeed = 2f;
+    private float xDrawOffet;
+    private float yDrawOffet;
+    // Map
     private static int mapData[][];
+    // Jump and Fall
+    private float airSpeed;
+    private float gravity = 0.025f*Game.SCALE;
+    private float jumpSpeed = -2.25f*Game.SCALE;
+    private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
+    private boolean inAir = false;
 
     public Character(float x, float y,int width, int height,
                      float HB_x, float HB_y,float HB_width, float HB_height,
@@ -98,8 +107,6 @@ public class Character extends Entity{
             playerAction = RUNNING;
         else
             playerAction = IDLE;
-
-
         if (startAni != playerAction){
             restAniTick();
         }
@@ -110,29 +117,58 @@ public class Character extends Entity{
     }
     public void render(Graphics g){
 //        g.drawImage(Animations[playerAction][aniIndex].getSubimage(0,0,chr_w,chr_h),(int)x,(int)y,null);
-        g.drawImage(Animations[playerAction][aniIndex], (int) (hitBox.x - xDrawOffet ), (int) (hitBox.y - yDrawOffet ),(int)width,(int)height, null);
+        g.drawImage(Animations[playerAction][aniIndex],
+                (int) (hitBox.x - xDrawOffet ),
+                (int) (hitBox.y - yDrawOffet ),
+                (int)width,(int)height, null);
 
         drawHitBox(g);
     }
     public void updatePos(){
         moving = 0;
-//        if (moving == 1){
-            if (up && !down){
-                moving = 1;
-                up();
-            }else if (down && !up){
-                moving = 1;
-                down();
-            }
+        float xSpeed = 0;
+        if (left){
+            xSpeed-= playerSpeed;
+            moving = 1;
+        }
+        if (right){
+            xSpeed+= playerSpeed;
+            moving = 1;
+        }
 
-            if (left && !right){
-                moving = 1;
-                left();
-            }else if (right && !left){
-                moving = 1;
-                right();
+        if (jump){
+            jump();
+        }
+
+        if (!inAir){
+            if (!IsEntityOnFloor(hitBox, mapData))
+                inAir = true;
+        }
+        if (inAir){
+            if(!IsSolidBox(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, mapData)){
+                hitBox.y += airSpeed;
+                airSpeed += gravity;
+                updateXpos(xSpeed);
+            }else {
+                hitBox.y = GetEntityYPosUnderRoofOrAboveFloor(hitBox, airSpeed);
+                if (airSpeed>0){
+                    inAir = false;
+                    airSpeed = 0;
+                }else
+                    airSpeed = fallSpeedAfterCollision;
+                updateXpos(xSpeed);
+
             }
-//        }
+        }else {
+            updateXpos(xSpeed);
+        }
+
+    }
+
+    private void jump() {
+        if(inAir)   return;
+        inAir = true;
+        airSpeed = jumpSpeed;
     }
 
     public void setControl(int[] ctrl){
@@ -149,21 +185,19 @@ public class Character extends Entity{
     public void setDown(boolean val){this.down = val;}
     public void setLeft(boolean val){this.left = val;}
     public void setRight(boolean val){this.right = val;}
+    public void setJump(boolean val){this.jump = val;}
     public void up(){
-        if(CanMoveHere(hitBox.x,hitBox.y-playerSpeed,hitBox.width,hitBox.height, mapData))
+        if(!IsSolidBox(hitBox.x,hitBox.y-playerSpeed,hitBox.width,hitBox.height, mapData))
             hitBox.y-=playerSpeed;
     }
-    public void down(){
-        if(CanMoveHere(hitBox.x,hitBox.y+playerSpeed,hitBox.width,hitBox.height, mapData))
-            hitBox.y+=playerSpeed;
-    }
-    public void left(){
-        if(CanMoveHere(hitBox.x-playerSpeed,hitBox.y,hitBox.width,hitBox.height, mapData))
-            hitBox.x-=playerSpeed;
-    }
-    public void right(){
-        if(CanMoveHere(hitBox.x+playerSpeed,hitBox.y,hitBox.width,hitBox.height, mapData))
-            hitBox.x+=playerSpeed;
+    private void updateXpos(float xSpeed){
+
+        if(!IsSolidBox(hitBox.x+xSpeed,hitBox.y,hitBox.width,hitBox.height, mapData)) {
+            hitBox.x += xSpeed;
+        }
+        else{
+            hitBox.x = GetEntityNextPosToWall(hitBox,xSpeed);
+        }
     }
     public void resetDir(){
         up = false;

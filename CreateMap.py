@@ -7,8 +7,8 @@ scale = 32
 px_1_block = 32
 
 sprite = cv2.imread("D:\\Java\\Dabde_v1\\res\\outside_sprites.png")
-window = np.ones((height*px_1_block, width*px_1_block, 3),dtype=np.uint8)*0
-Map = np.ones((height, width, 3), np.uint8)*0
+window = np.ones((height*px_1_block, width*px_1_block, 3),dtype=np.uint8)*11
+Map = np.ones((height, width, 3), np.uint8)*11
 index = 0
 
 def getAllBlock(img_src, px_1_block):
