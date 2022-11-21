@@ -31,8 +31,8 @@ public class Character extends Entity{
     private static int mapData[][];
     // Jump and Fall
     private float airSpeed;
-    private float gravity = 0.025f*Game.SCALE;
-    private float jumpSpeed = -2.25f*Game.SCALE;
+    private float gravity = 0.04f*Game.SCALE;
+    private float jumpSpeed = -2.5f*Game.SCALE;
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
     private boolean inAir = false;
 
@@ -103,10 +103,21 @@ public class Character extends Entity{
 
     public void setAnimations(){
         int startAni = playerAction;
-        if(moving != 0 )
-            playerAction = RUNNING;
-        else
-            playerAction = IDLE;
+        switch (moving){
+            case 0:
+                playerAction = IDLE;
+                break;
+            case 1:
+                playerAction = MOVING_LEFT;
+                break;
+            case 2:
+                playerAction = MOVING_RIGHT;
+                break;
+            case 3:
+                playerAction = JUMP;
+                break;
+        }
+
         if (startAni != playerAction){
             restAniTick();
         }
@@ -115,14 +126,14 @@ public class Character extends Entity{
         aniTick = 0;
         aniIndex = 0;
     }
-    public void render(Graphics g){
+    public void render(Graphics g, int xLvlOffset){
 //        g.drawImage(Animations[playerAction][aniIndex].getSubimage(0,0,chr_w,chr_h),(int)x,(int)y,null);
         g.drawImage(Animations[playerAction][aniIndex],
-                (int) (hitBox.x - xDrawOffet ),
+                (int) (hitBox.x - xDrawOffet -xLvlOffset),
                 (int) (hitBox.y - yDrawOffet ),
                 (int)width,(int)height, null);
 
-        drawHitBox(g);
+        drawHitBox(g, xLvlOffset);
     }
     public void updatePos(){
         moving = 0;
@@ -133,11 +144,12 @@ public class Character extends Entity{
         }
         if (right){
             xSpeed+= playerSpeed;
-            moving = 1;
+            moving = 2;
         }
 
         if (jump){
             jump();
+            moving = 3;
         }
 
         if (!inAir){

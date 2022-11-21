@@ -18,7 +18,8 @@ public class HelpMethods {
         return false;
     }
     public static boolean IsSolidBox(float x, float y,float width, float height, int[][] mapData){
-        if(x <= 0 || x+width >= Game.GAME_WIDTH)
+        int maxWidth = Game.TILES_SIZE*mapData[0].length;
+        if(x <= 0 || x+width >= maxWidth)
             return true;
         if(y<=0 || y+height>= Game.GAME_HEIGHT)
             return true;

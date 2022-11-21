@@ -30,8 +30,8 @@ public class LoadSave {
         return img;
     }
     public static int[][] GetLvlData(String path){
-        int lvlData[][] = new int[Game.TILES_IN_HEIGHT][Game.TILES_IN_WIDTH];
         BufferedImage img = GetSpriteAtlas(path);
+        int lvlData[][] = new int[img.getHeight()][img.getWidth()];
         int maxColor = OUT_SIDE_HEIGHT*OUT_SIDE_WIDTH;
 
         for(int i=0; i<img.getHeight();i++) {

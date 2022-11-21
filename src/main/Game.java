@@ -2,6 +2,8 @@ package main;
 
 import characters.Character;
 import levels.LevelManager;
+import utilz.LoadSave;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -22,6 +24,13 @@ public class Game implements Runnable{
     public final static int TILES_SIZE = (int)(TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
+
+    private int xLvlOffset;
+    private int leftBorder = (int) (0.2*GAME_WIDTH);
+    private int rightBorder = (int) (0.8*GAME_WIDTH);
+    private int lvlTilesWide = LoadSave.GetLvlData(MAP1)[0].length;
+    private int maxTilesOffset = lvlTilesWide-TILES_IN_WIDTH;
+    private int maxLvlOffsetX = maxTilesOffset*TILES_SIZE;
     public Character[] player = new Character[2];
     public Game() throws IOException {
         initClass();
@@ -39,7 +48,7 @@ public class Game implements Runnable{
                 KeyEvent.VK_A,
                 KeyEvent.VK_D};
         player[0] = new Character(
-                100f,100f, 32*2,50*2,
+                10f,10f, (int)(32*1.41),(int)(50*1.41),
                 X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 CATCHING_TEAM,
                 keyBroad_player_1,
@@ -52,7 +61,7 @@ public class Game implements Runnable{
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT};
         player[1] = new Character(
-                100f,100f, 32,50,
+                10f,10f, 32,50,
                 X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 RUNNING_TEAM,
                 keyBroad_player_2,
@@ -105,11 +114,26 @@ public class Game implements Runnable{
         for(int i=0;i< player.length;i++)
             player[i].update();
         levelManager.update();
+        checkCloseToBorder();
+    }
+    private void checkCloseToBorder(){
+        int playerX = (int) player[1].getHitBox().x;
+        int diff = playerX - xLvlOffset;
+        if (diff >rightBorder){
+            xLvlOffset+=diff-rightBorder;}
+        else if(diff <leftBorder)
+            xLvlOffset += diff - leftBorder;
+
+        if (xLvlOffset>maxLvlOffsetX)
+            xLvlOffset = maxLvlOffsetX;
+        else if(xLvlOffset<0){
+            xLvlOffset = 0;
+        }
     }
     public void render(Graphics g){
-        levelManager.draw(g);
+        levelManager.draw(g, xLvlOffset);
         for(int i=0;i< player.length;i++)
-            player[i].render(g);
+            player[i].render(g, xLvlOffset);
 
     }
     public GamePanel getGamePanel(){return this.gamePanel;}
