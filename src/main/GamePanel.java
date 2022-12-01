@@ -5,7 +5,6 @@ import static main.Game.GAME_HEIGHT;
 import inputs.KeybroadInputs;
 import inputs.MouseInputs;
 
-
 import javax.swing.*;
 import java.awt.*;
 

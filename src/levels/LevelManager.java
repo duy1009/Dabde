@@ -12,11 +12,13 @@ public class LevelManager {
     private Game game;
     private BufferedImage[] levelSprite;
     private Level levelOne;
+    private BufferedImage back_ground;
     public LevelManager(Game game){
         this.game = game;
 //        levelSprite = LoadSave.GetSpriteAtlas(LEVEL_ATLAS);
         importOutSide();
         levelOne = new Level(LoadSave.GetLvlData(MAP1));
+        back_ground = LoadSave.GetSpriteAtlas(BACKGROUND);
     }
     public void importOutSide(){
         BufferedImage img = LoadSave.GetSpriteAtlas(LEVEL_ATLAS);
@@ -30,6 +32,7 @@ public class LevelManager {
         }
     }
     public void draw(Graphics g, int xLvlOffset){
+        drawBackGround(g);
         for(int j=0;j<Game.TILES_IN_HEIGHT;j++)
             for(int i=0;i<levelOne.getLevelData()[0].length;i++){
                 int index =levelOne.getSpriteIndex(j,i);
@@ -39,6 +42,9 @@ public class LevelManager {
     }
     public void update(){
 
+    }
+    public void drawBackGround(Graphics g){
+        g.drawImage(back_ground, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT,null);
     }
 
     public Level getLevelOne() {

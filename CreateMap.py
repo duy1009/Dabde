@@ -6,7 +6,7 @@ height = 14
 px_1_block = 32
 
 sprite = cv2.imread("D:\\Java\\Dabde_v1\\res\\outside_sprites.png")
-src_edit = "D:\\Java\\Dabde_v1\\map_rlt.png"  # if not have image -> create a image empty 
+src_edit = "D:\\Java\\Dabde_v1\\res\\Map-long.png"  # if not have image -> create an image empty 
 
 def loadMap(path):
     map = np.array([])

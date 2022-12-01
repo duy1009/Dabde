@@ -10,12 +10,16 @@ public interface Constants {
     public static final int MOVING_RIGHT = 2;
     public static final int JUMP = 3;
 
+    // player speed
+    public static final float PLAYER_SPEED_DEFAULT = 1.5f;
+
 
 
     public static final String PLAYER_1_ATLAS = "/pGGbv.png";
     public static final String PLAYER_2_ATLAS = "/pGGbv.png";
     public static final String LEVEL_ATLAS = "/outside_sprites.png";
     public static final String MAP1 = "/Map-long.png";
+    public static final String BACKGROUND = "/playing_bg_img.png";
     // length outside_sprites.png
     public static final int OUT_SIDE_HEIGHT = 4;
     public static final int OUT_SIDE_WIDTH = 12;
@@ -24,4 +28,5 @@ public interface Constants {
 
     public static final int[] COLLISION_VALUE = {0, 1, 2, 4, 5, 12, 13, 14, 16, 17, 25, 39};
     public static final int[] BLOCKS_CAN_MOVE = {11};
+
 }

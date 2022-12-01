@@ -14,16 +14,17 @@ import static utilz.HelpMethods.*;
 public class Character extends Entity{
     private boolean alive;
     private int team;
-    public int moving, playerAction = IDLE, playerDir=-1;
-    private float playerSpeed = 1.5f;
+    private int moving, playerAction = IDLE, playerDir=-1;
+
+    private float playerSpeed = PLAYER_SPEED_DEFAULT;
     private int up_ctrl, down_ctrl, left_ctrl, right_ctrl; // controller key
-    private boolean up = false, down =false, left = false, right = false, jump =false;
+    private boolean down = false, left = false, right = false, jump =false;
 
     // Animation
     private BufferedImage img;
     private BufferedImage[][] Animations;
     private int aniTick = 0, aniIndex = 0, aniSpeed = 15;   // frame update an animation
-    public int ani_row_max, ani_col_max;
+    private int ani_row_max, ani_col_max;
     float chr_w, chr_h;
     private float xDrawOffet;
     private float yDrawOffet;
@@ -34,6 +35,10 @@ public class Character extends Entity{
     private float gravity = 0.04f*Game.SCALE;
     private float jumpSpeed = -2.5f*Game.SCALE;
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
+    // Down
+    private float heightHitBoxDown, heightHitBoxNotDown;
+    private float downSpeed = 0.5f*playerSpeed;
+    private boolean isDown = false;
     private boolean inAir = false;
 
     public Character(float x, float y,int width, int height,
@@ -43,7 +48,9 @@ public class Character extends Entity{
                      String animation_path,
                      int ani_row_max, int ani_col_max) // pixel
     {
+
         super(x,y,width, height);
+
         setControl(ctrl);
         this.x = x; this.y = y;
         this.ani_col_max = ani_col_max; this.ani_row_max = ani_row_max;
@@ -56,19 +63,12 @@ public class Character extends Entity{
 
         initHitBox(x, y, HB_width* width *Game.SCALE / chr_w, HB_height* height* Game.SCALE / chr_h);
 
-        System.out.println(hitBox.width + " " + hitBox.height);
+        heightHitBoxDown = 0.5f*hitBox.height;
+        heightHitBoxNotDown = hitBox.height;
+        System.out.println(heightHitBoxNotDown);
 
     }
-    public void setPos(float x, float y){
-        this.x = x;
-        this.y = y;
-    }
-    public void killed(){
-        alive = false;
-    }
-    public boolean isAlive(){
-        return alive;
-    }
+
 
     private void loadAnimation(String path) {
         img = LoadSave.GetSpriteAtlas(path);
@@ -87,7 +87,10 @@ public class Character extends Entity{
 
     public void update(){
         updatePos();
-        updateAnimationTick();
+        if(playerAction == IDLE)
+            aniIndex = 2;
+        else
+            updateAnimationTick();
         setAnimations();
 
     }
@@ -147,14 +150,28 @@ public class Character extends Entity{
             moving = 2;
         }
 
+        if (down){
+            down();
+        } else {
+            if (hitBox.height != heightHitBoxNotDown) {
+                if (!IsSolidBox(hitBox.x, hitBox.y - heightHitBoxNotDown + heightHitBoxDown, hitBox.width, heightHitBoxNotDown, mapData))
+                    standUp();
+                else
+                    down();
+            }
+        }
+
+
         if (jump){
             jump();
             moving = 3;
         }
 
         if (!inAir){
-            if (!IsEntityOnFloor(hitBox, mapData))
+            if (!IsEntityOnFloor(hitBox, mapData)){
                 inAir = true;
+            }
+
         }
         if (inAir){
             if(!IsSolidBox(hitBox.x, hitBox.y + airSpeed, hitBox.width, hitBox.height, mapData)){
@@ -169,7 +186,6 @@ public class Character extends Entity{
                 }else
                     airSpeed = fallSpeedAfterCollision;
                 updateXpos(xSpeed);
-
             }
         }else {
             updateXpos(xSpeed);
@@ -182,6 +198,15 @@ public class Character extends Entity{
         inAir = true;
         airSpeed = jumpSpeed;
     }
+    private void standUp(){
+        this.playerSpeed = PLAYER_SPEED_DEFAULT;
+        if(this.hitBox.height != heightHitBoxNotDown){
+            this.hitBox.y -= heightHitBoxNotDown - heightHitBoxDown;
+        }
+        this.hitBox.height = heightHitBoxNotDown;
+
+    }
+
 
     public void setControl(int[] ctrl){
         this.up_ctrl = ctrl[0];
@@ -193,17 +218,23 @@ public class Character extends Entity{
     public int getDownCtrl(){return down_ctrl;}
     public int getLeftCtrl(){return left_ctrl;}
     public int getRightCtrl(){return right_ctrl;}
-    public void setUp(boolean val){this.up = val;}
-    public void setDown(boolean val){this.down = val;}
+
+    public void setDown(boolean val){
+        this.down = val;
+    }
+    private void down(){
+        this.playerSpeed = downSpeed;
+        if (this.hitBox.height != heightHitBoxDown){
+            this.hitBox.y+= heightHitBoxNotDown - heightHitBoxDown;
+        }
+        this.hitBox.height = heightHitBoxDown;
+
+    }
     public void setLeft(boolean val){this.left = val;}
     public void setRight(boolean val){this.right = val;}
     public void setJump(boolean val){this.jump = val;}
-    public void up(){
-        if(!IsSolidBox(hitBox.x,hitBox.y-playerSpeed,hitBox.width,hitBox.height, mapData))
-            hitBox.y-=playerSpeed;
-    }
-    private void updateXpos(float xSpeed){
 
+    private void updateXpos(float xSpeed){
         if(!IsSolidBox(hitBox.x+xSpeed,hitBox.y,hitBox.width,hitBox.height, mapData)) {
             hitBox.x += xSpeed;
         }
@@ -212,10 +243,10 @@ public class Character extends Entity{
         }
     }
     public void resetDir(){
-        up = false;
-        down = false;
+//        down = false;
         left = false;
         right = false;
+        jump = false;
     }
     public void setDirection(int dir){
         this.playerDir = dir;

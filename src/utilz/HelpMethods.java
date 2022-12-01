@@ -74,13 +74,14 @@ public class HelpMethods {
     }
     public static boolean IsEntityOnFloor(Rectangle2D.Float hitBox, int[][] mapData){
         float x = hitBox.x, y=hitBox.y, width=hitBox.width, height=hitBox.height;
-        if(x <= 0 || x+width >= Game.GAME_WIDTH)
+        int maxWidth = Game.TILES_SIZE*mapData[0].length;
+        if(x <= 0 || x+width >= maxWidth)
             return true;
-        if(y<=0 || y+height>= Game.GAME_HEIGHT)
+        if(y<=0 || y+height+1>= Game.GAME_HEIGHT)
             return true;
         int xInxMin = (int)(x/Game.TILES_SIZE);
         int xInxMax = (int)((x+width)/Game.TILES_SIZE);
-        int yInx = (int)((y+height)/Game.TILES_SIZE);
+        int yInx = (int)((y+height+1)/Game.TILES_SIZE);
 
         for(int xInx = xInxMin; xInx<=xInxMax; xInx++){
             int value = mapData[yInx][xInx];
@@ -94,4 +95,5 @@ public class HelpMethods {
 
         return false;
     }
+
 }
