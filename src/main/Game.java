@@ -1,6 +1,7 @@
 package main;
 
 import characters.Character;
+import client.ManagerSocket;
 import levels.LevelManager;
 import utilz.LoadSave;
 
@@ -20,26 +21,37 @@ public class Game implements Runnable{
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1.0f;
     public final static int TILES_IN_WIDTH = 26;
-    public final static int TILES_IN_HEIGHT = 14;
+    public final static int TILES_IN_HEIGHT = 12;
     public final static int TILES_SIZE = (int)(TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
     private int xLvlOffset;
+    private int yLvlOffset;
     private int leftBorder = (int) (0.2*GAME_WIDTH);
     private int rightBorder = (int) (0.8*GAME_WIDTH);
+    private int upBorder = (int) (0.2*GAME_HEIGHT);
+    private int downBorder = (int)(0.8*GAME_HEIGHT);
     private int lvlTilesWide = LoadSave.GetLvlData(MAP1)[0].length;
-    private int maxTilesOffset = lvlTilesWide-TILES_IN_WIDTH;
-    private int maxLvlOffsetX = maxTilesOffset*TILES_SIZE;
+    private int lvlTileHigh = LoadSave.GetLvlData(MAP1).length;
+    private int maxTilesOffsetX = lvlTilesWide-TILES_IN_WIDTH;
+    private int maxTilesOffsetY = lvlTileHigh-TILES_IN_HEIGHT;
+    private int maxLvlOffsetX = maxTilesOffsetX*TILES_SIZE;
+    private int maxLvlOffsetY = maxTilesOffsetY*TILES_SIZE;
     public Character[] player = new Character[2];
+    private int mainCharacter = 0;
+    private ManagerSocket managerSocket;
     public Game() throws IOException {
         initClass();
+//        managerSocket = new ManagerSocket(this,"localhost", 3333);
+//        gamePanel = new GamePanel(this, managerSocket.getSend());
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
         gamePanel.requestFocusInWindow();
         gamePanel.requestFocus();
-        startGameLoop();
+        System.out.println("Map size: "+lvlTilesWide + "x" +lvlTileHigh);
 
+        startGameLoop();
     }
     private void initPlayer(){
         int[] keyBroad_player_1 = {
@@ -48,7 +60,7 @@ public class Game implements Runnable{
                 KeyEvent.VK_A,
                 KeyEvent.VK_D};
         player[0] = new Character(
-                10f,10f, (int)(32*1.41),(int)(50*1.41),
+                10f,10f, 32,50,
                 X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 CATCHING_TEAM,
                 keyBroad_player_1,
@@ -61,12 +73,13 @@ public class Game implements Runnable{
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT};
         player[1] = new Character(
-                10f,10f, 32,50,
+                500f,200f, 32,50,
                 X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
                 RUNNING_TEAM,
                 keyBroad_player_2,
                 PLAYER_2_ATLAS,
                 4, 12);
+
     }
     private void initClass(){
         levelManager = new LevelManager(this);
@@ -104,6 +117,7 @@ public class Game implements Runnable{
             }
             if(System.currentTimeMillis() - lastCheck>=1000){
                 System.out.println("FPS: " + frame +"|" + "UPS: " + updates);
+                System.out.println("Main Character:"+player[mainCharacter].getHitBox().x/32 +" "+player[mainCharacter].getHitBox().y/32);
                 frame = 0;
                 updates = 0;
                 lastCheck = System.currentTimeMillis();
@@ -117,25 +131,38 @@ public class Game implements Runnable{
         checkCloseToBorder();
     }
     private void checkCloseToBorder(){
-        int playerX = (int) player[1].getHitBox().x;
-        int diff = playerX - xLvlOffset;
-        if (diff >rightBorder){
-            xLvlOffset+=diff-rightBorder;}
-        else if(diff <leftBorder)
-            xLvlOffset += diff - leftBorder;
+        int playerX = (int) player[mainCharacter].getHitBox().x;
+        int playerY = (int) player[mainCharacter].getHitBox().y;
+        int diffX = playerX - xLvlOffset;
+        int diffY = playerY - yLvlOffset;
+
+        if (diffX >rightBorder){
+            xLvlOffset+=diffX-rightBorder;}
+        else if(diffX <leftBorder)
+            xLvlOffset += diffX - leftBorder;
+        if (diffY >downBorder){
+            yLvlOffset+=diffY - downBorder;}
+        else if(diffY <upBorder)
+            yLvlOffset += diffY - upBorder;
 
         if (xLvlOffset>maxLvlOffsetX)
             xLvlOffset = maxLvlOffsetX;
         else if(xLvlOffset<0){
             xLvlOffset = 0;
         }
+        if (yLvlOffset>maxLvlOffsetY)
+            yLvlOffset = maxLvlOffsetY;
+        else if(yLvlOffset<0){
+            yLvlOffset = 0;
+        }
     }
     public void render(Graphics g){
-        levelManager.draw(g, xLvlOffset);
+        levelManager.draw(g, xLvlOffset, yLvlOffset);
         for(int i=0;i< player.length;i++)
-            player[i].render(g, xLvlOffset);
-
+            player[i].render(g, xLvlOffset, yLvlOffset);
     }
+    public void setMainCharacter(int num){mainCharacter = num;}
+    public int getMainCharacter(){return mainCharacter;}
     public GamePanel getGamePanel(){return this.gamePanel;}
     public Character[] getPlayer(){return this.player;}
 }

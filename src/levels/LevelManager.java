@@ -31,12 +31,12 @@ public class LevelManager {
             }
         }
     }
-    public void draw(Graphics g, int xLvlOffset){
+    public void draw(Graphics g, int xLvlOffset, int yLvlOffset){
         drawBackGround(g);
-        for(int j=0;j<Game.TILES_IN_HEIGHT;j++)
+        for(int j=0;j<levelOne.getLevelData().length;j++)
             for(int i=0;i<levelOne.getLevelData()[0].length;i++){
                 int index =levelOne.getSpriteIndex(j,i);
-                g.drawImage(levelSprite[index], Game.TILES_SIZE*i - xLvlOffset, Game.TILES_SIZE*j,Game.TILES_SIZE,Game.TILES_SIZE, null);
+                g.drawImage(levelSprite[index], Game.TILES_SIZE*i - xLvlOffset, Game.TILES_SIZE*j - yLvlOffset,Game.TILES_SIZE,Game.TILES_SIZE, null);
 
             }
     }

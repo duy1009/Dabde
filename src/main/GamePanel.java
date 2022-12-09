@@ -2,6 +2,8 @@ package main;
 
 import static main.Game.GAME_WIDTH;
 import static main.Game.GAME_HEIGHT;
+
+import client.Send;
 import inputs.KeybroadInputs;
 import inputs.MouseInputs;
 
@@ -13,8 +15,8 @@ import java.io.IOException;
 public class GamePanel extends JPanel {
     private Game game;
 
-    private int aniTick = 0, aniIndex = 0, aniSpeed = 15;   // frame update an animation
-    public GamePanel(Game game) throws IOException {
+    public GamePanel(Game game){
+
         setPanelSize();
         this.game = game;
         MouseInputs mouse= new MouseInputs(this);
@@ -22,11 +24,17 @@ public class GamePanel extends JPanel {
         addMouseListener(mouse);
         addMouseMotionListener(mouse);
     }
+    public GamePanel(Game game, Send send) throws IOException {
 
-
+        setPanelSize();
+        this.game = game;
+        MouseInputs mouse= new MouseInputs(this);
+        addKeyListener(new KeybroadInputs(this, send));
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
+    }
 
     public void paintComponent(Graphics g){
-
         super.paintComponent(g);
         game.render(g);
 

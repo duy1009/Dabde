@@ -29,4 +29,28 @@ public interface Constants {
     public static final int[] COLLISION_VALUE = {0, 1, 2, 4, 5, 12, 13, 14, 16, 17, 25, 39};
     public static final int[] BLOCKS_CAN_MOVE = {11};
 
+//    Socket packet
+    public static final int SC_START_GAME = 1;
+    public static final int SC_KEY_INPUT = 2;
+    public static final int SC_POS = 3;
+    public static final int SC_IS_DEAD = 4;
+
+    public static final int SC_LENGTH_START_GAME = 2;
+    public static final int SC_LENGTH_KEY_INPUT= 5;
+    public static final int SC_LENGTH_POS= 3;
+    public static final int SC_LENGTH_IS_DEAD= 2;
+
+//    Socket start game (index of packet)
+    public static final int ST_MAIN_PLAYER = 0;
+
+//    Socket key input (index of packet)
+    public static final int IP_UP = 1;
+    public static final int IP_DOWN = 2;
+    public static final int IP_LEFT = 3;
+    public static final int IP_RIGHT = 4;
+
+    public static final int IP_NOT_KEY = 0;
+    public static final int IP_PRESSED = 1;
+    public static final int IP_RELEASED = 0;
+    public static final int IP_TYPE = 3;
 }

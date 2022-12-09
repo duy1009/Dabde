@@ -9,19 +9,12 @@ import static utilz.Constants.*;
 
 public class HelpMethods {
 
-    public static boolean CanMoveHere(float x, float y,float width, float height, int[][] mapData){
-        if(!IsSolid(x,y,mapData))
-            if(!IsSolid(x+width,y, mapData))
-                if(!IsSolid(x,y+height, mapData))
-                    if(!IsSolid(x+width,y+height, mapData))
-                        return true;
-        return false;
-    }
     public static boolean IsSolidBox(float x, float y,float width, float height, int[][] mapData){
         int maxWidth = Game.TILES_SIZE*mapData[0].length;
+        int maxHeight = Game.TILES_SIZE*mapData.length;
         if(x <= 0 || x+width >= maxWidth)
             return true;
-        if(y<=0 || y+height>= Game.GAME_HEIGHT)
+        if(y<=0 || y+height>= maxHeight)
             return true;
         int xInxMin = (int)(x/Game.TILES_SIZE);
         int xInxMax = (int)((x+width)/Game.TILES_SIZE);
@@ -41,22 +34,7 @@ public class HelpMethods {
 
         return false;
     }
-    public static boolean IsSolid(float x, float y, int[][] mapData){
-        if(x <= 0 || x >= Game.GAME_WIDTH)
-            return true;
-        if(y<=0 || y>= Game.GAME_HEIGHT)
-            return true;
-        float xInx = x/Game.TILES_SIZE;
-        float yInx = y/Game.TILES_SIZE;
-        int value = mapData[(int)yInx][(int)xInx];
-        if (value > OUT_SIDE_WIDTH*OUT_SIDE_HEIGHT || value < 0)
-            return true;
 
-        for (int i:BLOCKS_CAN_MOVE) {
-            if(value != i) return true;
-        }
-        return false;
-    }
     public static float GetEntityNextPosToWall(Rectangle2D.Float hitbox, float xSpeed){
         if(xSpeed>0){
             return (((int)((hitbox.x+ hitbox.width)/Game.TILES_SIZE)+1)*Game.TILES_SIZE)  - hitbox.width-1;
@@ -75,9 +53,10 @@ public class HelpMethods {
     public static boolean IsEntityOnFloor(Rectangle2D.Float hitBox, int[][] mapData){
         float x = hitBox.x, y=hitBox.y, width=hitBox.width, height=hitBox.height;
         int maxWidth = Game.TILES_SIZE*mapData[0].length;
+        int maxHeight = Game.TILES_SIZE*mapData.length;
         if(x <= 0 || x+width >= maxWidth)
             return true;
-        if(y<=0 || y+height+1>= Game.GAME_HEIGHT)
+        if(y<=0 || y+height+1>= maxHeight)
             return true;
         int xInxMin = (int)(x/Game.TILES_SIZE);
         int xInxMax = (int)((x+width)/Game.TILES_SIZE);

@@ -65,7 +65,6 @@ public class Character extends Entity{
 
         heightHitBoxDown = 0.5f*hitBox.height;
         heightHitBoxNotDown = hitBox.height;
-        System.out.println(heightHitBoxNotDown);
 
     }
 
@@ -129,14 +128,14 @@ public class Character extends Entity{
         aniTick = 0;
         aniIndex = 0;
     }
-    public void render(Graphics g, int xLvlOffset){
+    public void render(Graphics g, int xLvlOffset, int yLvlOffet){
 //        g.drawImage(Animations[playerAction][aniIndex].getSubimage(0,0,chr_w,chr_h),(int)x,(int)y,null);
         g.drawImage(Animations[playerAction][aniIndex],
                 (int) (hitBox.x - xDrawOffet -xLvlOffset),
-                (int) (hitBox.y - yDrawOffet ),
+                (int) (hitBox.y - yDrawOffet -yLvlOffet),
                 (int)width,(int)height, null);
 
-        drawHitBox(g, xLvlOffset);
+        drawHitBox(g, xLvlOffset, yLvlOffet);
     }
     public void updatePos(){
         moving = 0;
@@ -160,7 +159,6 @@ public class Character extends Entity{
                     down();
             }
         }
-
 
         if (jump){
             jump();

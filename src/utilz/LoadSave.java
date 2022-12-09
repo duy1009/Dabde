@@ -42,9 +42,7 @@ public class LoadSave {
                     val = 0;
                 }
                 lvlData[i][j] = val;
-                System.out.print(val + " ");
             }
-            System.out.println(" ");
         }
 
 
