@@ -12,8 +12,14 @@ import static utilz.Constants.*;
 import static utilz.HelpMethods.*;
 
 public class Character extends Entity{
-    private boolean alive;
-    private int team;
+    // Animations action
+    public  int IDLE = 0;
+    public int MOVING = 1;
+
+    public int JUMP = 3;
+    public int FALLING = 3;
+    public int DOWN = 4;
+
     private int moving, playerAction = IDLE, playerDir=-1;
 
     private float playerSpeed = PLAYER_SPEED_DEFAULT;
@@ -25,6 +31,8 @@ public class Character extends Entity{
     private BufferedImage[][] Animations;
     private int aniTick = 0, aniIndex = 0, aniSpeed = 15;   // frame update an animation
     private int ani_row_max, ani_col_max;
+    private int FlipX=0;
+    private int FlipW=1;
     float chr_w, chr_h;
     private float xDrawOffet;
     private float yDrawOffet;
@@ -33,7 +41,7 @@ public class Character extends Entity{
     // Jump and Fall
     private float airSpeed;
     private float gravity = 0.04f*Game.SCALE;
-    private float jumpSpeed = -2.5f*Game.SCALE;
+    private float jumpSpeed = -3.0f*Game.SCALE;
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
     // Down
     private float heightHitBoxDown, heightHitBoxNotDown;
@@ -43,7 +51,6 @@ public class Character extends Entity{
 
     public Character(float x, float y,int width, int height,
                      float HB_x, float HB_y,float HB_width, float HB_height,
-                     int team,
                      int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
                      String animation_path,
                      int ani_row_max, int ani_col_max) // pixel
@@ -54,10 +61,9 @@ public class Character extends Entity{
         setControl(ctrl);
         this.x = x; this.y = y;
         this.ani_col_max = ani_col_max; this.ani_row_max = ani_row_max;
-        this.team = team;
-        this.alive = true;
 
-        loadAnimation(animation_path);
+
+        loadAnimation(animation_path, true);
         this.xDrawOffet = HB_x* width * Game.SCALE / chr_w;;
         this.yDrawOffet = HB_y* height * Game.SCALE / chr_h;
 
@@ -69,15 +75,17 @@ public class Character extends Entity{
     }
 
 
-    private void loadAnimation(String path) {
+    private void loadAnimation(String path, boolean addFlip) {
         img = LoadSave.GetSpriteAtlas(path);
         this.chr_h = img.getHeight()/ani_row_max;
         this.chr_w = img.getWidth()/ani_col_max;
         Animations = new BufferedImage[ani_row_max][ani_col_max];
+
         for(int i=0; i< Animations.length;i++) // load animation first
             for(int j=0;j < Animations[i].length;j++){
                 Animations[i][j] = img.getSubimage((int)(j * chr_w), (int)(i * chr_h), (int)chr_w, (int)chr_h);
             }
+
 
     }
     public static void loadMapData(int[][] mapDt){
@@ -98,8 +106,9 @@ public class Character extends Entity{
         if(aniTick>= aniSpeed){
             aniTick=0;
             aniIndex++;
-            if(aniIndex >= Animations[0].length)
+            if(aniIndex >= Animations[0].length){
                 aniIndex = 0;
+            }
         }
     }
 
@@ -110,30 +119,35 @@ public class Character extends Entity{
                 playerAction = IDLE;
                 break;
             case 1:
-                playerAction = MOVING_LEFT;
+                playerAction = MOVING;
                 break;
             case 2:
-                playerAction = MOVING_RIGHT;
+                playerAction = DOWN;
                 break;
-            case 3:
-                playerAction = JUMP;
-                break;
-        }
 
+        }
+        if( inAir){
+            if(airSpeed<0)
+                playerAction = JUMP;
+            else
+                playerAction = FALLING;
+        }
         if (startAni != playerAction){
             restAniTick();
         }
+    }
+    public void setAniAction(int idle, int moving, int up, int down, int fall){
+        IDLE = idle; MOVING=moving ; JUMP = up; DOWN = down; FALLING = fall;
     }
     public void restAniTick(){
         aniTick = 0;
         aniIndex = 0;
     }
     public void render(Graphics g, int xLvlOffset, int yLvlOffet){
-//        g.drawImage(Animations[playerAction][aniIndex].getSubimage(0,0,chr_w,chr_h),(int)x,(int)y,null);
         g.drawImage(Animations[playerAction][aniIndex],
-                (int) (hitBox.x - xDrawOffet -xLvlOffset),
-                (int) (hitBox.y - yDrawOffet -yLvlOffet),
-                (int)width,(int)height, null);
+                (int) (hitBox.x - xDrawOffet - xLvlOffset + FlipX),
+                (int) (hitBox.y - yDrawOffet - yLvlOffet),
+                (int)width*FlipW,(int)height, null);
 
         drawHitBox(g, xLvlOffset, yLvlOffet);
     }
@@ -143,26 +157,31 @@ public class Character extends Entity{
         if (left){
             xSpeed-= playerSpeed;
             moving = 1;
+            FlipX = (int)width;
+            FlipW = -1;
         }
         if (right){
             xSpeed+= playerSpeed;
-            moving = 2;
+            moving = 1;
+            FlipX = 0;
+            FlipW = 1;
         }
 
         if (down){
             down();
+            moving = 2;
         } else {
             if (hitBox.height != heightHitBoxNotDown) {
                 if (!IsSolidBox(hitBox.x, hitBox.y - heightHitBoxNotDown + heightHitBoxDown, hitBox.width, heightHitBoxNotDown, mapData))
                     standUp();
-                else
+                else{
                     down();
+                    moving =2;
+                }
             }
         }
-
         if (jump){
             jump();
-            moving = 3;
         }
 
         if (!inAir){

@@ -4,6 +4,7 @@ import main.Game;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import static utilz.Constants.*;
 
@@ -26,15 +27,18 @@ public class HelpMethods {
                 int value = mapData[yInx][xInx];
                 if (value > OUT_SIDE_WIDTH*OUT_SIDE_HEIGHT || value < 0)
                     return true;
-
+                boolean solid = true;
                 for (int i:BLOCKS_CAN_MOVE) {
-                    if(value != i) return true;
+                    if(value == i) {
+                        solid = false;
+                        break;
+                    }
                 }
+                if (solid) return true;
             }
 
         return false;
     }
-
     public static float GetEntityNextPosToWall(Rectangle2D.Float hitbox, float xSpeed){
         if(xSpeed>0){
             return (((int)((hitbox.x+ hitbox.width)/Game.TILES_SIZE)+1)*Game.TILES_SIZE)  - hitbox.width-1;
@@ -43,7 +47,6 @@ public class HelpMethods {
         }
     }
     public static float GetEntityYPosUnderRoofOrAboveFloor(Rectangle2D.Float hitBox, float airSpeed){
-        int currentTile = (int)(hitBox.y/Game.TILES_SIZE);
         if(airSpeed > 0){//fall
             return (((int)((hitBox.y+ hitBox.height)/Game.TILES_SIZE)+1)*Game.TILES_SIZE)  - hitBox.height-1;
         }
@@ -67,12 +70,28 @@ public class HelpMethods {
             if (value > OUT_SIDE_WIDTH*OUT_SIDE_HEIGHT || value < 0)
                 return true;
 
+//            for (int i:BLOCKS_CAN_MOVE) {
+//                if (value != i) return true;
+//            }
+            boolean solid = true;
             for (int i:BLOCKS_CAN_MOVE) {
-                if (value != i) return true;
+                if(value == i) {
+                    solid = false;
+                    break;
+                }
             }
+            if (solid) return true;
         }
 
         return false;
     }
-
+    public static boolean isBlankImage(BufferedImage img){
+        for (int i=0;i< img.getHeight();i++){
+            for (int j=0;j<img.getWidth();j++){
+                int rgb = img.getRGB(i,j);
+                System.out.println(rgb);
+            }
+        }
+        return true;
+    }
 }

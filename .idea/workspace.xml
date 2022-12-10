@@ -2,22 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dffac82-9c31-47d8-a937-6ef60eff0cb8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/client/ManagerSocket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Packets.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Receive.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/Send.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/317693652_566454931987962_1585302934007832243_n.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/Map2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/outside_sprites_v2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/outside_sprites_v2.psd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/outside_sprites_v3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/player_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/player_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/res/test.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CreateMap.py" beforeDir="false" afterPath="$PROJECT_DIR$/tool/CreateMap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/map_rlt.png" beforeDir="false" afterPath="$PROJECT_DIR$/tool/map_rlt.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/map_rlt.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/characters/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/levels/LevelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/levels/LevelManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilz/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilz/HelpMethods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/HelpMethods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utilz/LoadSave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/LoadSave.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tool/CreateMap.py" beforeDir="false" afterPath="$PROJECT_DIR$/tool/CreateMap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tool/map_rlt.png" beforeDir="false" afterPath="$PROJECT_DIR$/tool/map_rlt.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,18 +51,18 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/Java/Dabde-backup-socket",
+    "last_opened_file_path": "C:/Users/admin/Desktop/PlatformerTutorial",
     "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Java\Dabde_v1\src" />
       <recent name="D:\Java\Dabde_v1\res" />
+      <recent name="D:\Java\Dabde_v1\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Java\Dabde_v1\tool" />
       <recent name="D:\Java\Dabde_v1\res" />
+      <recent name="D:\Java\Dabde_v1\tool" />
       <recent name="D:\Java\Dabde_v1\src\res" />
       <recent name="D:\Java\Dabde_v1\src" />
     </key>

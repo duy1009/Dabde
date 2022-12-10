@@ -7,8 +7,9 @@ import utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-
+import utilz.HelpMethods;
 import static utilz.Constants.*;
 
 public class Game implements Runnable{
@@ -21,7 +22,7 @@ public class Game implements Runnable{
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1.0f;
     public final static int TILES_IN_WIDTH = 26;
-    public final static int TILES_IN_HEIGHT = 12;
+    public final static int TILES_IN_HEIGHT = 15;
     public final static int TILES_SIZE = (int)(TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
@@ -50,7 +51,8 @@ public class Game implements Runnable{
         gamePanel.requestFocusInWindow();
         gamePanel.requestFocus();
         System.out.println("Map size: "+lvlTilesWide + "x" +lvlTileHigh);
-
+//        BufferedImage im = LoadSave.GetSpriteAtlas("/test.png");
+//        HelpMethods.isBlankImage(im);
         startGameLoop();
     }
     private void initPlayer(){
@@ -60,26 +62,24 @@ public class Game implements Runnable{
                 KeyEvent.VK_A,
                 KeyEvent.VK_D};
         player[0] = new Character(
-                10f,10f, 32,50,
-                X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
-                CATCHING_TEAM,
+                1000f,10f, 126,80,
+                45, 19, 30f, 50f, // offset and width, height
                 keyBroad_player_1,
                 PLAYER_1_ATLAS,
-                4, 12);
-
+                8, 10);
+        player[0].setAniAction(2,5,5,7, 3);
         int[] keyBroad_player_2 = {
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT};
         player[1] = new Character(
-                500f,200f, 32,50,
-                X_OFFSET_PLAYER, Y_OFFSET_PLAYER, 50f, 147f,
-                RUNNING_TEAM,
+                450f,100f, 126,80,
+                24, 6, 15f, 25f,
                 keyBroad_player_2,
                 PLAYER_2_ATLAS,
-                4, 12);
-
+                8, 8);
+        player[1].setAniAction(0,1,2,7,3);
     }
     private void initClass(){
         levelManager = new LevelManager(this);
