@@ -35,8 +35,7 @@ public abstract class Character extends Entity{
     private int FlipX=0;
     private int FlipW=1;
     float chr_w, chr_h;
-    private float xDrawOffet;
-    private float yDrawOffet;
+
     // Map
     private static int mapData[][];
     // Jump and Fall
@@ -49,6 +48,7 @@ public abstract class Character extends Entity{
     private float downSpeed = 0.5f*playerSpeed;
     private boolean isDown = false;
     private boolean inAir = false;
+    protected boolean lockMoving = false;
 
     public Character(float x, float y,int width, int height,
                           float HB_x, float HB_y,float HB_width, float HB_height,
@@ -57,16 +57,15 @@ public abstract class Character extends Entity{
                           int ani_row_max, int ani_col_max) // pixel
     {
 
-        super(x,y,width, height);
+        super(width, height);
 
         setControl(ctrl);
-        this.x = x; this.y = y;
         this.ani_col_max = ani_col_max; this.ani_row_max = ani_row_max;
 
 
         loadAnimation(animation_path, true);
-        this.xDrawOffet = HB_x* width * Game.SCALE / chr_w;;
-        this.yDrawOffet = HB_y* height * Game.SCALE / chr_h;
+        this.xDrawOffset = HB_x* width * Game.SCALE / chr_w;;
+        this.yDrawOffset = HB_y* height * Game.SCALE / chr_h;
 
         initHitBox(x, y, HB_width* width *Game.SCALE / chr_w, HB_height* height* Game.SCALE / chr_h);
 
@@ -94,7 +93,8 @@ public abstract class Character extends Entity{
     }
 
     public void update(){
-        updatePos();
+        if(!lockMoving)
+            updatePos();
         if(playerAction == IDLE)
             aniIndex = 2;
         else
@@ -146,8 +146,8 @@ public abstract class Character extends Entity{
     }
     public void render(Graphics g, int xLvlOffset, int yLvlOffet){
         g.drawImage(Animations[playerAction][aniIndex],
-                (int) (hitBox.x - xDrawOffet - xLvlOffset + FlipX),
-                (int) (hitBox.y - yDrawOffet - yLvlOffet),
+                (int) (hitBox.x - xDrawOffset - xLvlOffset + FlipX),
+                (int) (hitBox.y - yDrawOffset - yLvlOffet),
                 (int)width*FlipW,(int)height, null);
 
         drawHitBox(g, xLvlOffset, yLvlOffet);

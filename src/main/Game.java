@@ -16,25 +16,29 @@ import static utilz.Constants.*;
 
 public class Game implements Runnable{
     private GameWindow gameWindow;
+    private GameWindow2 gameWindow2;
     private GamePanel gamePanel;
+    private GamePanel2 gamePanel2;
     private Thread gameThread;
     private LevelManager levelManager;
     private final int FPS_SET = 60;
     private final int UPS_SET = 150;
     public final static int TILES_DEFAULT_SIZE = 32;
-    public final static float SCALE = 1.0f;
-    public final static int TILES_IN_WIDTH = 26;
-    public final static int TILES_IN_HEIGHT = 15;
+    public final static float SCALE = 1f;
+    public final static int TILES_IN_WIDTH = 25;
+    public final static int TILES_IN_HEIGHT = 12;
     public final static int TILES_SIZE = (int)(TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
     private int xLvlOffset;
     private int yLvlOffset;
-    private int leftBorder = (int) (0.2*GAME_WIDTH);
-    private int rightBorder = (int) (0.8*GAME_WIDTH);
-    private int upBorder = (int) (0.2*GAME_HEIGHT);
-    private int downBorder = (int)(0.8*GAME_HEIGHT);
+    private int xLvlOffset2;
+    private int yLvlOffset2;
+    private int leftBorder = (int) (0.3*GAME_WIDTH);
+    private int rightBorder = (int) (0.7*GAME_WIDTH);
+    private int upBorder = (int) (0.3*GAME_HEIGHT);
+    private int downBorder = (int)(0.7*GAME_HEIGHT);
     private int lvlTilesWide = LoadSave.GetLvlData(MAP1)[0].length;
     private int lvlTileHigh = LoadSave.GetLvlData(MAP1).length;
     private int maxTilesOffsetX = lvlTilesWide-TILES_IN_WIDTH;
@@ -49,12 +53,12 @@ public class Game implements Runnable{
 //        managerSocket = new ManagerSocket(this,"localhost", 3333);
 //        gamePanel = new GamePanel(this, managerSocket.getSend());
         gamePanel = new GamePanel(this);
+        gamePanel2 = new GamePanel2(this);
         gameWindow = new GameWindow(gamePanel);
+        gameWindow2 = new GameWindow2(gamePanel2);
         gamePanel.requestFocusInWindow();
         gamePanel.requestFocus();
-        System.out.println("Map size: "+lvlTilesWide + "x" +lvlTileHigh);
-//        BufferedImage im = LoadSave.GetSpriteAtlas("/test.png");
-//        HelpMethods.isBlankImage(im);
+        System.out.println("Map size: " + lvlTilesWide + "x" + lvlTileHigh);
         startGameLoop();
     }
     private void initPlayer(){
@@ -71,7 +75,6 @@ public class Game implements Runnable{
 
         player[0] = new Pirate(1000f,10f, keyBroad_player_1);
         player[1] = new Fighter(450f,100f, keyBroad_player_2);
-
     }
     private void initClass(){
         levelManager = new LevelManager(this);
@@ -99,6 +102,7 @@ public class Game implements Runnable{
             pre_time = curr_time;
             if(DeltaF >= 1){
                 gamePanel.repaint();
+                gamePanel2.repaint();
                 frame++;
                 DeltaF--;
             }
@@ -121,6 +125,7 @@ public class Game implements Runnable{
             player[i].update();
         levelManager.update();
         checkCloseToBorder();
+        checkCloseToBorder2();
     }
     private void checkCloseToBorder(){
         int playerX = (int) player[mainCharacter].getHitBox().x;
@@ -148,10 +153,41 @@ public class Game implements Runnable{
             yLvlOffset = 0;
         }
     }
+    private void checkCloseToBorder2(){
+        int playerX = (int) player[1].getHitBox().x;
+        int playerY = (int) player[1].getHitBox().y;
+        int diffX = playerX - xLvlOffset2;
+        int diffY = playerY - yLvlOffset2;
+
+        if (diffX >rightBorder){
+            xLvlOffset2+=diffX-rightBorder;}
+        else if(diffX <leftBorder)
+            xLvlOffset2 += diffX - leftBorder;
+        if (diffY >downBorder){
+            yLvlOffset2+=diffY - downBorder;}
+        else if(diffY <upBorder)
+            yLvlOffset2 += diffY - upBorder;
+
+        if (xLvlOffset2>maxLvlOffsetX)
+            xLvlOffset2 = maxLvlOffsetX;
+        else if(xLvlOffset2<0){
+            xLvlOffset2 = 0;
+        }
+        if (yLvlOffset2>maxLvlOffsetY)
+            yLvlOffset2 = maxLvlOffsetY;
+        else if(yLvlOffset2<0){
+            yLvlOffset2 = 0;
+        }
+    }
     public void render(Graphics g){
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         for(int i=0;i< player.length;i++)
             player[i].render(g, xLvlOffset, yLvlOffset);
+    }
+    public void render2(Graphics g){
+        levelManager.draw(g, xLvlOffset2, yLvlOffset2);
+        for(int i=0;i< player.length;i++)
+            player[i].render(g, xLvlOffset2, yLvlOffset2);
     }
     public void setMainCharacter(int num){mainCharacter = num;}
     public int getMainCharacter(){return mainCharacter;}

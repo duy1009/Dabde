@@ -85,13 +85,5 @@ public class HelpMethods {
 
         return false;
     }
-    public static boolean isBlankImage(BufferedImage img){
-        for (int i=0;i< img.getHeight();i++){
-            for (int j=0;j<img.getWidth();j++){
-                int rgb = img.getRGB(i,j);
-                System.out.println(rgb);
-            }
-        }
-        return true;
-    }
+
 }

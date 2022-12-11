@@ -4,13 +4,12 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public abstract class Entity {
-    protected float x,y;
+    protected float xDrawOffset;
+    protected float yDrawOffset;
     protected float width, height;
     protected Rectangle2D.Float hitBox;
 
-    public Entity(float x, float y, float width, float height){
-        this.x=x;
-        this.y=y;
+    public Entity(float width, float height){
         this.width = width;
         this.height = height;
     }

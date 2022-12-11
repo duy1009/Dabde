@@ -1,5 +1,7 @@
 package characters;
 
+import main.Game;
+
 import static utilz.Constants.PLAYER_1_ATLAS;
 
 public class Fighter extends Character {
