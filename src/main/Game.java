@@ -1,6 +1,8 @@
 package main;
 
 import characters.Character;
+import characters.Fighter;
+import characters.Pirate;
 import client.ManagerSocket;
 import levels.LevelManager;
 import utilz.LoadSave;
@@ -17,7 +19,7 @@ public class Game implements Runnable{
     private GamePanel gamePanel;
     private Thread gameThread;
     private LevelManager levelManager;
-    private final int FPS_SET = 120;
+    private final int FPS_SET = 60;
     private final int UPS_SET = 150;
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1.0f;
@@ -61,25 +63,15 @@ public class Game implements Runnable{
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
                 KeyEvent.VK_D};
-        player[0] = new Character(
-                1000f,10f, 126,80,
-                45, 19, 30f, 50f, // offset and width, height
-                keyBroad_player_1,
-                PLAYER_1_ATLAS,
-                8, 10);
-        player[0].setAniAction(2,5,5,7, 3);
         int[] keyBroad_player_2 = {
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT};
-        player[1] = new Character(
-                450f,100f, 126,80,
-                24, 6, 15f, 25f,
-                keyBroad_player_2,
-                PLAYER_2_ATLAS,
-                8, 8);
-        player[1].setAniAction(0,1,2,7,3);
+
+        player[0] = new Pirate(1000f,10f, keyBroad_player_1);
+        player[1] = new Fighter(450f,100f, keyBroad_player_2);
+
     }
     private void initClass(){
         levelManager = new LevelManager(this);

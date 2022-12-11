@@ -1,17 +1,16 @@
 package characters;
 
-
 import main.Game;
-
 import utilz.LoadSave;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.*;
+import static utilz.Constants.PLAYER_SPEED_DEFAULT;
 import static utilz.HelpMethods.*;
 
-public class Character extends Entity{
+
+public abstract class Character extends Entity{
     // Animations action
     public  int IDLE = 0;
     public int MOVING = 1;
@@ -24,6 +23,8 @@ public class Character extends Entity{
 
     private float playerSpeed = PLAYER_SPEED_DEFAULT;
     private int up_ctrl, down_ctrl, left_ctrl, right_ctrl; // controller key
+    protected boolean skill_1 = false, skill_2 = false, skill_3 = false;
+    protected int skill_1_ctrl, skill_2_ctrl, skill_3_ctrl;
     private boolean down = false, left = false, right = false, jump =false;
 
     // Animation
@@ -40,7 +41,7 @@ public class Character extends Entity{
     private static int mapData[][];
     // Jump and Fall
     private float airSpeed;
-    private float gravity = 0.04f*Game.SCALE;
+    private float gravity = 0.04f* Game.SCALE;
     private float jumpSpeed = -3.0f*Game.SCALE;
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
     // Down
@@ -50,10 +51,10 @@ public class Character extends Entity{
     private boolean inAir = false;
 
     public Character(float x, float y,int width, int height,
-                     float HB_x, float HB_y,float HB_width, float HB_height,
-                     int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
-                     String animation_path,
-                     int ani_row_max, int ani_col_max) // pixel
+                          float HB_x, float HB_y,float HB_width, float HB_height,
+                          int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
+                          String animation_path,
+                          int ani_row_max, int ani_col_max) // pixel
     {
 
         super(x,y,width, height);
@@ -250,7 +251,9 @@ public class Character extends Entity{
     public void setLeft(boolean val){this.left = val;}
     public void setRight(boolean val){this.right = val;}
     public void setJump(boolean val){this.jump = val;}
-
+    public void setSkill_1(boolean val){ skill_1 = val;}
+    public void setSkill_2(boolean val){ skill_2 = val;}
+    public void setSkill_3(boolean val){ skill_3 = val;}
     private void updateXpos(float xSpeed){
         if(!IsSolidBox(hitBox.x+xSpeed,hitBox.y,hitBox.width,hitBox.height, mapData)) {
             hitBox.x += xSpeed;
@@ -272,3 +275,4 @@ public class Character extends Entity{
     public Character getCharacter(){return this;}
     public void setMoving(int moving){this.moving = moving;}
 }
+
