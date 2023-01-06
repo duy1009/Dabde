@@ -21,7 +21,7 @@ public class Game implements Runnable{
     private GamePanel2 gamePanel2;
     private Thread gameThread;
     private LevelManager levelManager;
-    private final int FPS_SET = 60;
+    private final int FPS_SET = 40;
     private final int UPS_SET = 150;
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1f;
@@ -31,10 +31,8 @@ public class Game implements Runnable{
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
-    private int xLvlOffset;
-    private int yLvlOffset;
-    private int xLvlOffset2;
-    private int yLvlOffset2;
+    public int xLvlOffset, yLvlOffset;
+    public int xLvlOffset2, yLvlOffset2;
     private int leftBorder = (int) (0.3*GAME_WIDTH);
     private int rightBorder = (int) (0.7*GAME_WIDTH);
     private int upBorder = (int) (0.3*GAME_HEIGHT);
@@ -66,15 +64,24 @@ public class Game implements Runnable{
                 KeyEvent.VK_W,
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
-                KeyEvent.VK_D};
+                KeyEvent.VK_D,
+                KeyEvent.VK_G,
+                KeyEvent.VK_T,
+                KeyEvent.VK_Y,
+                KeyEvent.VK_U};
         int[] keyBroad_player_2 = {
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
-                KeyEvent.VK_RIGHT};
+                KeyEvent.VK_RIGHT,
+                KeyEvent.VK_NUMPAD1,
+                KeyEvent.VK_NUMPAD4,
+                KeyEvent.VK_NUMPAD5,
+                KeyEvent.VK_NUMPAD6};
 
-        player[0] = new Pirate(1000f,10f, keyBroad_player_1);
-        player[1] = new Fighter(450f,100f, keyBroad_player_2);
+        player[0] = new Pirate(1000f,10f, 0,keyBroad_player_1, player);
+        player[1] = new Fighter(450f,100f, 1,keyBroad_player_2, player);
+        player[1].setStatusBarFlip(true);
     }
     private void initClass(){
         levelManager = new LevelManager(this);
@@ -90,7 +97,7 @@ public class Game implements Runnable{
         double timePerFrame = 1000000000.0/FPS_SET;
         double timePerUpdate = 1000000000.0/UPS_SET;
         long pre_time = System.nanoTime();
-        long curr_time = System.nanoTime();
+        long curr_time;
         double DeltaU = 0, DeltaF = 0;
         int frame = 0, updates = 0;
 
@@ -113,7 +120,6 @@ public class Game implements Runnable{
             }
             if(System.currentTimeMillis() - lastCheck>=1000){
                 System.out.println("FPS: " + frame +"|" + "UPS: " + updates);
-                System.out.println("Main Character:"+player[mainCharacter].getHitBox().x/32 +" "+player[mainCharacter].getHitBox().y/32);
                 frame = 0;
                 updates = 0;
                 lastCheck = System.currentTimeMillis();

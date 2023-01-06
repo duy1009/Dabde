@@ -48,6 +48,14 @@ public class KeybroadInputs implements KeyListener{
                 Player[i].setLeft(true);
             }else if (e.getKeyCode()==Player[i].getRightCtrl()){
                 Player[i].setRight(true);
+            } else if (e.getKeyCode()==Player[i].getSkill_1_ctrl()){
+                Player[i].setSkill_1(true);
+            }else if (e.getKeyCode()==Player[i].getSkill_2_ctrl()){
+                Player[i].setSkill_2(true);
+            }else if (e.getKeyCode()==Player[i].getSkill_3_ctrl()){
+                Player[i].setSkill_3(true);
+            }else if (e.getKeyCode()==Player[i].getSkill_4_ctrl()){
+                Player[i].setSkill_4(true);
             }
 
         }

@@ -36,7 +36,6 @@ public class HelpMethods {
                 }
                 if (solid) return true;
             }
-
         return false;
     }
     public static float GetEntityNextPosToWall(Rectangle2D.Float hitbox, float xSpeed){
@@ -70,9 +69,6 @@ public class HelpMethods {
             if (value > OUT_SIDE_WIDTH*OUT_SIDE_HEIGHT || value < 0)
                 return true;
 
-//            for (int i:BLOCKS_CAN_MOVE) {
-//                if (value != i) return true;
-//            }
             boolean solid = true;
             for (int i:BLOCKS_CAN_MOVE) {
                 if(value == i) {
@@ -84,6 +80,16 @@ public class HelpMethods {
         }
 
         return false;
+    }
+    public static boolean boxCollision(Rectangle2D.Float box1, Rectangle2D.Float box2){
+        if (Math.abs(Math.abs(box1.x + box1.width/2) - Math.abs(box2.x + box2.width/2)) < Math.abs(box1.width+box2.width)/2)
+            if (Math.abs(Math.abs(box1.y + box1.height/2) - Math.abs(box2.y + box2.height/2)) < Math.abs(box1.height+box2.height)/2)
+                return true;
+        return false;
+    }
+    public static Rectangle2D.Float flipHorBox(int x, Rectangle2D.Float box){
+        box.x = 2*x - box.x - box.width;
+        return box;
     }
 
 }
