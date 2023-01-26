@@ -35,7 +35,7 @@ public class Pirate extends Character{
     private boolean activateAttackBox = false, activateBox2 = false, activateBox3 = false, activateBox4 = false;
     private boolean firstUpdateSkill1 = false, firstUpdateSkill2 = false, firstUpdateSkill3 = false,firstUpdateSkill4 = false;
     private boolean firstEndSkill2;
-    private BufferedImage[] trapAni;
+    private BufferedImage[][] trapAni;
     Vector<Objection> obj;
     private float trap_w;
 
@@ -50,8 +50,8 @@ public class Pirate extends Character{
         this.obj = obj;
         this.player = player;
 
-        this.trapAni = LoadSave.loadArrayAni_1D(TRAP_ATLAS, 4);
-        trap_w = trapAni[0].getWidth();
+        this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
+        trap_w = trapAni[0][0].getWidth();
 
     }
 
@@ -125,8 +125,10 @@ public class Pirate extends Character{
         if(skill_3){
             if(firstUpdateSkill3){
                 Traps newTrap = new Traps(hitBox.x, hitBox.y,
-                        0,0,25,21,
-                        trapAni, (int)(trap_w), numOfPlayer, player, FlipW, obj, mapData);
+                        0f,0f,25f,21f,
+                        trapAni,
+                        numOfPlayer, player, FlipW,
+                        obj, mapData);
                 this.obj.add(newTrap);
                 firstUpdateSkill3 = false;
             }

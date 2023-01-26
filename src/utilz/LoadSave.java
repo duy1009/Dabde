@@ -58,4 +58,16 @@ public class LoadSave {
             ani[i] = img.getSubimage((int)(i *width), 0, (int)width, (int)height);
         return ani;
     }
+    public static BufferedImage[][] loadArrayAni_2D(String path, int numW, int numH){
+        BufferedImage img = GetSpriteAtlas(path);
+        BufferedImage[][] ani = new BufferedImage[numH][numW];
+        float width = img.getWidth()/numW;
+        float height = img.getHeight()/numH;
+        for(int i=0; i< ani.length;i++) // load animation first
+            for(int j=0;j < ani[i].length;j++){
+                ani[i][j] = img.getSubimage((int)(j * width), (int)(i * height), (int)width, (int)height);
+            }
+
+        return ani;
+    }
 }
