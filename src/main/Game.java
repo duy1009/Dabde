@@ -3,6 +3,7 @@ package main;
 import characters.Character;
 import characters.Fighter;
 import characters.Pirate;
+import characters.skill.Objection;
 import client.ManagerSocket;
 import levels.LevelManager;
 import utilz.LoadSave;
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Vector;
+
 import utilz.HelpMethods;
 import static utilz.Constants.*;
 
@@ -46,6 +49,7 @@ public class Game implements Runnable{
     public Character[] player = new Character[2];
     private int mainCharacter = 0;
     private ManagerSocket managerSocket;
+    Vector <Objection> obj = new Vector<>();
     public Game() throws IOException {
         initClass();
 //        managerSocket = new ManagerSocket(this,"localhost", 3333);
@@ -58,6 +62,9 @@ public class Game implements Runnable{
         gamePanel.requestFocus();
         System.out.println("Map size: " + lvlTilesWide + "x" + lvlTileHigh);
         startGameLoop();
+//        obj.add(ind, value);
+//        obj.remove(ind);
+//        obj.size();
     }
     private void initPlayer(){
         int[] keyBroad_player_1 = {
@@ -79,7 +86,7 @@ public class Game implements Runnable{
                 KeyEvent.VK_NUMPAD5,
                 KeyEvent.VK_NUMPAD6};
 
-        player[0] = new Pirate(1000f,10f, 0,keyBroad_player_1, player);
+        player[0] = new Pirate(1000f,10f, 0,keyBroad_player_1, player, obj);
         player[1] = new Fighter(450f,100f, 1,keyBroad_player_2, player);
         player[1].setStatusBarFlip(true);
     }
@@ -129,6 +136,11 @@ public class Game implements Runnable{
     public void update(){
         for(int i=0;i< player.length;i++)
             player[i].update();
+        for(Objection i:obj){
+            if(i.isActivate())
+                i.update();
+        }
+
         levelManager.update();
         checkCloseToBorder();
         checkCloseToBorder2();
@@ -189,11 +201,19 @@ public class Game implements Runnable{
         levelManager.draw(g, xLvlOffset, yLvlOffset);
         for(int i=0;i< player.length;i++)
             player[i].render(g, xLvlOffset, yLvlOffset);
+        for(Objection i:obj){
+            if(i.isActivateAni())
+                i.render(g, xLvlOffset, yLvlOffset);
+        }
     }
     public void render2(Graphics g){
         levelManager.draw(g, xLvlOffset2, yLvlOffset2);
         for(int i=0;i< player.length;i++)
             player[i].render(g, xLvlOffset2, yLvlOffset2);
+        for(Objection i:obj){
+            if(i.isActivateAni())
+                i.render(g, xLvlOffset2, yLvlOffset2);
+        }
     }
     public void setMainCharacter(int num){mainCharacter = num;}
     public int getMainCharacter(){return mainCharacter;}

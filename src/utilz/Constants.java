@@ -17,6 +17,7 @@ public interface Constants {
     public static final String MAP1 = "/Map2.png";
     public static final String BACKGROUND = "/bg_2.png";
     public static final String STATUS_BAR = "/health_power_bar.png";
+    public static final String TRAP_ATLAS = "/Bomb.png";
 
     // length outside_sprites.png
     public static final int OUT_SIDE_HEIGHT = 4;

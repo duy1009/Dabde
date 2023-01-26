@@ -27,6 +27,7 @@ public class Fighter extends Character {
     private long preTimeSkill1 = 0, preTimeSkill2 = 0, preTimeSkill3 = 0, preTimeSkill4 = 0;
     private boolean firstUpdateSkill1 = false, firstUpdateSkill2 = false, firstUpdateSkill3 = false,firstUpdateSkill4 = false;
     private boolean activateAttackBox = false, activateBox2 = false, activateBox3 = false, activateBox4 = false;
+    private boolean firstEndSkill4;
     private int flipWSkill2 = 1, flipXSkill2 = 0;
     private float skill2Speed = 2*Game.SCALE;
     private int numOfPlayer = 0;
@@ -63,6 +64,7 @@ public class Fighter extends Character {
         long currentTime = System.currentTimeMillis();
         if (currentTime-preTimeSkill1 >= SKILL_1_WORK_TIME ){
             skill_1 = false;
+            activateAttackBox = false;
         }
         if (currentTime-preTimeSkill2 >= SKILL_2_WORK_TIME ){
             skill_2 = false;
@@ -74,8 +76,11 @@ public class Fighter extends Character {
         if (currentTime-preTimeSkill4 >= SKILL_4_WORK_TIME ){
             skill_4 = false;
         }
-        if(!skill_4 ){
-            playerSpeed = PLAYER_SPEED_DEFAULT*Game.SCALE;
+        if(!skill_4 && firstEndSkill4){
+//            playerSpeed = PLAYER_SPEED_DEFAULT*Game.SCALE;
+            firstEndSkill4 = false;
+            changeSpeed(2);
+
             if(!skill_1){
                 aniSpeed = ANI_SPEED_DEFAULT;
             }
@@ -126,7 +131,7 @@ public class Fighter extends Character {
                     flipXSkill2 = DEFAULT_WIDTH_KUNAI;
                     skill2Box = flipHorBox((int) (hitBox.x + hitBox.width/2),skill2Box);
                 }else {
-                    skill2Speed = 2*Game.SCALE;
+                    skill2Speed = 3f*Game.SCALE;
                     flipWSkill2 = 1;
                     flipXSkill2 = 0;
                 }
@@ -155,9 +160,9 @@ public class Fighter extends Character {
                     if (i==this.numOfPlayer)
                         continue;
                     if (boxCollision(skill2Box, player[i].getHitBox())) {
-                        player[i].addHP(-100);
+                        player[i].addHP(-70);
                         activateBox2 = false;
-                        skill_2 = false;
+//                        skill_2 = false;
                     }
                 }
             }
@@ -172,11 +177,11 @@ public class Fighter extends Character {
     private void updateSkill3(){
         if (skill_3) {
             if (firstUpdateSkill3){
-                if (!IsSolidBox(skill2Box.x, skill2Box.y, hitBox.width, hitBox.height, mapData)) {
+                if (!IsSolidBox(skill2Box.x+1, skill2Box.y-20*Game.SCALE, hitBox.width, hitBox.height, mapData)) {
                     skill3X = (int)(hitBox.x-xDrawOffset);
                     skill3Y = (int)(hitBox.y-yDrawOffset);
-                    hitBox.x = skill2Box.x;
-                    hitBox.y = skill2Box.y;
+                    hitBox.x = skill2Box.x+1;
+                    hitBox.y = skill2Box.y-20*Game.SCALE;
                     firstUpdateSkill3 = false;
                     skill_2 = false;
 
@@ -190,7 +195,8 @@ public class Fighter extends Character {
                 aniSpeed = 25; // animation faster
                 activateBox4 = true;
                 firstUpdateSkill4 = false;
-                playerSpeed = PLAYER_SPEED_DEFAULT/2*Game.SCALE;
+//                playerSpeed = PLAYER_SPEED_DEFAULT/2*Game.SCALE;
+                changeSpeed(0.5f);
             }
             if(SKILL_4_START_ACTIVATE_BOX_TIME < System.currentTimeMillis() - preTimeSkill4)
                 if (activateBox4){
@@ -248,15 +254,19 @@ public class Fighter extends Character {
     }
     @Override
     protected void renderSkill(Graphics g,int xLvlOffset,int yLvlOffset) {
-        renderAttackBox(g, xLvlOffset, yLvlOffset);
+
         if(skill_2) {
             renderSkill2(g, xLvlOffset, yLvlOffset);
         }
         if(skill_3){
             renderSkill3(g, xLvlOffset, yLvlOffset);
         }
-        renderBox2(g, xLvlOffset, yLvlOffset);
-        renderBox4(g, xLvlOffset, yLvlOffset);
+        if(activateAttackBox)
+            renderAttackBox(g, xLvlOffset, yLvlOffset);
+        if(activateBox2)
+            renderBox2(g, xLvlOffset, yLvlOffset);
+        if(activateBox4)
+            renderBox4(g, xLvlOffset, yLvlOffset);
     }
     @Override
     public void setSkill_1(boolean val){
@@ -294,6 +304,7 @@ public class Fighter extends Character {
         if(val && currentTime - preTimeSkill4 >=SKILL_4_RECOVERY_TIME) {
             skill_4 = true;
             firstUpdateSkill4 = true;
+            firstEndSkill4 = true;
             preTimeSkill4 = System.currentTimeMillis();
         }
     }

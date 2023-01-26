@@ -49,4 +49,13 @@ public class LoadSave {
         return lvlData;
     }
 
+    public static BufferedImage[] loadArrayAni_1D(String path, int aniNum){
+        BufferedImage img = GetSpriteAtlas(path);
+        BufferedImage[] ani = new BufferedImage[aniNum];
+        float width = img.getWidth()/aniNum;
+        float height = img.getHeight();
+        for(int i=0; i< ani.length;i++)
+            ani[i] = img.getSubimage((int)(i *width), 0, (int)width, (int)height);
+        return ani;
+    }
 }
