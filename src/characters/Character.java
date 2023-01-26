@@ -45,8 +45,7 @@ public abstract class Character extends Entity{
     private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
     // Down
     private float heightHitBoxDown, heightHitBoxNotDown;
-    private float downSpeed = 0.5f*playerSpeed;
-    private boolean isDown = false;
+    private float RATIO_SPEED_DOWN = 0.5f;
     private boolean inAir = false;
     protected boolean lockMoving = false;
     // Health Bar
@@ -263,7 +262,8 @@ public abstract class Character extends Entity{
         airSpeed = jumpSpeed;
     }
     private void standUp(){
-        this.playerSpeed = PLAYER_SPEED_DEFAULT*Game.SCALE;
+//        this.playerSpeed = PLAYER_SPEED_DEFAULT*Game.SCALE;
+        changeSpeed(1/RATIO_SPEED_DOWN);
         if(this.hitBox.height != heightHitBoxNotDown){
             this.hitBox.y -= heightHitBoxNotDown - heightHitBoxDown;
         }
@@ -297,8 +297,9 @@ public abstract class Character extends Entity{
     }
     public void setStatusBarFlip(boolean val){statusBarFlip = val;};
     private void down(){
-        this.playerSpeed = downSpeed;
+
         if (this.hitBox.height != heightHitBoxDown){
+            changeSpeed(RATIO_SPEED_DOWN);
             this.hitBox.y+= heightHitBoxNotDown - heightHitBoxDown;
         }
         this.hitBox.height = heightHitBoxDown;
@@ -329,6 +330,9 @@ public abstract class Character extends Entity{
         right = false;
         jump = false;
     }
+    public void changeSpeed(float ratio){
+        this.playerSpeed = this.playerSpeed * ratio;
+    }
     public void setDirection(int dir){
         this.playerDir = dir;
         moving = 1;
@@ -345,5 +349,6 @@ public abstract class Character extends Entity{
     protected void renderSkill(Graphics g, int xLvlOffset, int yLvlOffset) {
     }
     protected void updateSkill(){}
+
 }
 
