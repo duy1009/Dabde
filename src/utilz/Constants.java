@@ -1,6 +1,17 @@
 package utilz;
 
+import main.Game;
+
 public interface Constants {
+
+    public static class UI{
+        public static class Buttons{
+            public static final int B_WIDTH_DEFAULT = 140;
+            public static final int B_HEIGHT_DEFAULT = 56;
+            public static final int B_WIDTH = (int)(B_WIDTH_DEFAULT* Game.SCALE);
+            public static final int B_HEIGHT = (int)(B_HEIGHT_DEFAULT* Game.SCALE);
+        }
+    }
     public static final int CATCHING_TEAM = 1;
     public static final int RUNNING_TEAM = 2;
 
@@ -18,6 +29,7 @@ public interface Constants {
     public static final String BACKGROUND = "/bg_2.png";
     public static final String STATUS_BAR = "/health_power_bar.png";
     public static final String TRAP_ATLAS = "/Bomb.png";
+    public static final String MENU_BUTTON = "/button_atlas.png";
 
     // length outside_sprites.png
     public static final int OUT_SIDE_HEIGHT = 4;

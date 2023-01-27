@@ -1,23 +1,14 @@
 package main;
 
-import characters.Character;
-import characters.Fighter;
-import characters.Pirate;
-import characters.skill.Objection;
 import client.ManagerSocket;
 import gamestates.GameState;
 import gamestates.Playing;
-import levels.LevelManager;
-import utilz.LoadSave;
+
 import gamestates.Menu;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Vector;
 
-import utilz.HelpMethods;
-import static utilz.Constants.*;
+import java.io.IOException;
+
 
 public class Game implements Runnable{
     private GameWindow gameWindow;
@@ -108,6 +99,10 @@ public class Game implements Runnable{
             case PLAYING:
                 playing.update();
                 break;
+            case OPTIONS:
+                break;
+            case QUIT:
+                System.exit(0);
             default:
                 break;
         }
