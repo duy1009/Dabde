@@ -75,9 +75,9 @@ public class Fighter extends Character {
         }
         if (currentTime-preTimeSkill4 >= SKILL_4_WORK_TIME ){
             skill_4 = false;
+            activateBox4 = false;
         }
         if(!skill_4 && firstEndSkill4){
-//            playerSpeed = PLAYER_SPEED_DEFAULT*Game.SCALE;
             firstEndSkill4 = false;
             changeSpeed(2);
 
@@ -218,7 +218,6 @@ public class Fighter extends Character {
                         }
                     }
                 }
-
         }
     }
     @Override
@@ -309,5 +308,4 @@ public class Fighter extends Character {
             preTimeSkill4 = System.currentTimeMillis();
         }
     }
-
 }

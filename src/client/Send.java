@@ -56,7 +56,7 @@ public class Send implements Runnable{
         endData.setData(0, SC_IS_DEAD);
     }
     private synchronized void sendData(Packets pack) throws IOException{
-        String data_str = (char)game.getMainCharacter()+ ArrCharToString(pack.getData());
+        String data_str = (char)game.getPlaying().getMainCharacter()+ ArrCharToString(pack.getData());
         dout.writeUTF(data_str);
         dout.flush();
         pack.noChange();

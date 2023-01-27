@@ -5,6 +5,7 @@ import characters.Character;
 import client.Packets;
 import client.Receive;
 import client.Send;
+import gamestates.GameState;
 import main.GamePanel;
 import utilz.Constants;
 
@@ -20,16 +21,16 @@ public class KeybroadInputs implements KeyListener{
     private Packets keyData;
     public KeybroadInputs(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        mainChar = gamePanel.getGame().getMainCharacter();
+//        mainChar = gamePanel.getGame().getMainCharacter();
 //        System.out.println(keyData);
     }
-    public KeybroadInputs(GamePanel gamePanel, Send send) {
-        this.gamePanel = gamePanel;
-        mainChar = gamePanel.getGame().getMainCharacter();
-        Player = gamePanel.getGame().getPlayer()[mainChar];
-        keyData = send.getKeyData();
-        System.out.println(keyData);
-    }
+//    public KeybroadInputs(GamePanel gamePanel, Send send) {
+//        this.gamePanel = gamePanel;
+//        mainChar = gamePanel.getGame().getMainCharacter();
+//        Player = gamePanel.getGame().getPlayer()[mainChar];
+//        keyData = send.getKeyData();
+//        System.out.println(keyData);
+//    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -38,41 +39,28 @@ public class KeybroadInputs implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Character Player[] = gamePanel.getGame().getPlayer();
-        for (int i =0; i<Player.length; i++){
-            if (e.getKeyCode()==Player[i].getUpCtrl()){
-                Player[i].setJump(true);
-            }else if (e.getKeyCode()==Player[i].getDownCtrl()){
-                Player[i].setDown(true);
-            }else if (e.getKeyCode()==Player[i].getLeftCtrl()){
-                Player[i].setLeft(true);
-            }else if (e.getKeyCode()==Player[i].getRightCtrl()){
-                Player[i].setRight(true);
-            } else if (e.getKeyCode()==Player[i].getSkill_1_ctrl()){
-                Player[i].setSkill_1(true);
-            }else if (e.getKeyCode()==Player[i].getSkill_2_ctrl()){
-                Player[i].setSkill_2(true);
-            }else if (e.getKeyCode()==Player[i].getSkill_3_ctrl()){
-                Player[i].setSkill_3(true);
-            }else if (e.getKeyCode()==Player[i].getSkill_4_ctrl()){
-                Player[i].setSkill_4(true);
-            }
-
+        switch (GameState.state){
+            case MENU:
+                gamePanel.getGame().getMenu().keyPressed(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().keyPressed(e);
+                break;
+            default:
+                break;
         }
     }
     @Override
     public void keyReleased(KeyEvent e) {
-        Character Player[] = gamePanel.getGame().getPlayer();
-        for (int i =0; i<Player.length; i++){
-            if (e.getKeyCode()==Player[i].getUpCtrl()){
-                Player[i].setJump(false);
-            }else if (e.getKeyCode()==Player[i].getDownCtrl()){
-                Player[i].setDown(false);
-            }else if (e.getKeyCode()==Player[i].getLeftCtrl()){
-                Player[i].setLeft(false);
-            }else if (e.getKeyCode()==Player[i].getRightCtrl()){
-                Player[i].setRight(false);
-            }
+        switch (GameState.state){
+            case MENU:
+                gamePanel.getGame().getMenu().keyReleased(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().keyReleased(e);
+                break;
+            default:
+                break;
         }
     }
 //    @Override

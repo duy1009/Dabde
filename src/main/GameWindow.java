@@ -1,6 +1,7 @@
 package main;
 
 import characters.Character;
+import gamestates.GameState;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -23,10 +24,13 @@ public class GameWindow {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                Character[] player = gamePanel.getGame().getPlayer();
-                for(int i=0; i< player.length;i++){
-                    player[i].resetDir();
+                if(GameState.state == GameState.PLAYING){
+                    Character[] player = gamePanel.getGame().getPlaying().getPlayer();
+                    for(int i=0; i< player.length;i++){
+                        player[i].resetDir();
+                    }
                 }
+//
             }
         });
     }

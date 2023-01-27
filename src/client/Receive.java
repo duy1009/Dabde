@@ -68,8 +68,8 @@ public class Receive implements Runnable{
     }
 
     private void keyInput(String msg) {
-        Character[] player = game.getPlayer();
-        int mainPlayer = game.getMainCharacter();
+        Character[] player = game.getPlaying().getPlayer();
+        int mainPlayer = game.getPlaying().getMainCharacter();
         System.out.println("You are player "+mainPlayer);
         int obj = msg.charAt(0);
 
@@ -83,7 +83,7 @@ public class Receive implements Runnable{
     }
 
     private void startGame(String msg) {
-        this.game.setMainCharacter(msg.charAt(ST_MAIN_PLAYER));
+        this.game.getPlaying().setMainCharacter(msg.charAt(ST_MAIN_PLAYER));
     }
 
     private void stringToArrChar(char[] arr, String str){

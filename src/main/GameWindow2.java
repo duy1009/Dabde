@@ -23,7 +23,7 @@ public class GameWindow2 {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                Character[] player = gamePanel.getGame().getPlayer();
+                Character[] player = gamePanel.getGame().getPlaying().getPlayer();
                 for(int i=0; i< player.length;i++){
                     player[i].resetDir();
                 }
