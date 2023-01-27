@@ -15,6 +15,8 @@ import static utilz.HelpMethods.boxCollision;
 import static utilz.HelpMethods.flipHorBox;
 
 public class Pirate extends Character{
+    private final int ICE_BLOCK = 47;
+    private final int AIR_BLOCK = 11;
     private int NORMAL_ATTACK = 4;
     private int SKILL_1_RECOVERY_TIME = 350;
     private int SKILL_2_RECOVERY_TIME = 10000;
@@ -23,7 +25,7 @@ public class Pirate extends Character{
     private int SKILL_1_WORK_TIME = 300;
     private int SKILL_2_WORK_TIME = 3000;
     private int SKILL_3_WORK_TIME = 500;
-    private int SKILL_4_WORK_TIME = 1500;
+    private int SKILL_4_WORK_TIME = 4000;
     private float RATIO_SKILL_2 = 2f;
     private long preTimeSkill1 = 0, preTimeSkill2 = 0, preTimeSkill3 = 0, preTimeSkill4 = 0;
     private int numOfPlayer = 0;
@@ -35,9 +37,11 @@ public class Pirate extends Character{
     private boolean activateAttackBox = false, activateBox2 = false, activateBox3 = false, activateBox4 = false;
     private boolean firstUpdateSkill1 = false, firstUpdateSkill2 = false, firstUpdateSkill3 = false,firstUpdateSkill4 = false;
     private boolean firstEndSkill2;
+    private boolean firstEndSkill4;
+    private int applyAniSkill4 = 0;
     private BufferedImage[][] trapAni;
     Vector<Objection> obj;
-    private float trap_w;
+    int indX, indY;
 
     public Pirate(float x, float y, int numberOfPlayer, int[] keyBroad_player, Character[] player, Vector<Objection> obj){
         super(x, y , 126,80,
@@ -51,7 +55,6 @@ public class Pirate extends Character{
         this.player = player;
 
         this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
-        trap_w = trapAni[0][0].getWidth();
 
     }
 
@@ -71,6 +74,10 @@ public class Pirate extends Character{
         if (currentTime-preTimeSkill4 >= SKILL_4_WORK_TIME ){
             skill_4 = false;
         }
+        if(!skill_4 && firstEndSkill4){
+            mapData[indY][indX] = AIR_BLOCK; // Air block
+            firstEndSkill4 = false;
+        }
         if(!skill_2 && firstEndSkill2){
             changeSpeed(1/RATIO_SKILL_2);
             firstEndSkill2 = false;
@@ -81,7 +88,7 @@ public class Pirate extends Character{
         updateSkill1();
         updateSkill2();
         updateSkill3();
-//        updateSkill4();
+        updateSkill4();
     }
 
     private void updateSkill1(){
@@ -117,7 +124,6 @@ public class Pirate extends Character{
             if(firstUpdateSkill2){
                 changeSpeed(RATIO_SKILL_2);
                 firstUpdateSkill2 = false;
-
             }
         }
     }
@@ -134,7 +140,25 @@ public class Pirate extends Character{
             }
         }
     }
-
+    private void updateSkill4(){
+        if(skill_4){
+            if(firstUpdateSkill4){
+                if(FlipW == 1){
+                    indX = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1);
+                }else {
+                    indX = (int)(hitBox.x/Game.TILES_SIZE - 1);
+                }
+                indY = (int)(hitBox.y/Game.TILES_SIZE);
+                if(indX<mapData[0].length && indX>=0){
+                    if(indY<mapData.length && indY>=0)
+                        mapData[indY][indX] = ICE_BLOCK;
+                }else{
+                    preTimeSkill4 = 0;
+                }
+                firstUpdateSkill4 = false;
+            }
+        }
+    }
 
 
     @Override
@@ -173,6 +197,8 @@ public class Pirate extends Character{
         if(val && currentTime - preTimeSkill4 >=SKILL_4_RECOVERY_TIME) {
             skill_4 = true;
             firstUpdateSkill4 = true;
+            firstEndSkill4 = true;
+            applyAniSkill4 = aniSpeed*4;
             preTimeSkill4 = System.currentTimeMillis();
         }
     }
@@ -180,6 +206,10 @@ public class Pirate extends Character{
     public void setSkillAni(){
         if(skill_1)
             playerAction = NORMAL_ATTACK;
+        if(applyAniSkill4 >0) {
+            playerAction = JUMP;
+            applyAniSkill4--;
+        }
     }
     private void renderAttackBox(Graphics g, int xLvlOffset, int yLvlOffset){
         g.setColor(Color.RED);

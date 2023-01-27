@@ -184,7 +184,8 @@ public class Fighter extends Character {
                     hitBox.y = skill2Box.y-20*Game.SCALE;
                     firstUpdateSkill3 = false;
                     skill_2 = false;
-
+                }else{
+                    preTimeSkill3 = 0;
                 }
             }
         }
