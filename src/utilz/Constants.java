@@ -38,7 +38,10 @@ public interface Constants {
     public static final String STATUS_BAR = "/health_power_bar.png";
     public static final String TRAP_ATLAS = "/Bomb.png";
     public static final String MENU_BUTTON = "/button_atlasv2.png";
+    public static final String TABLE_PICK = "/choose_charactersv2.png";
 
+    public static final String BG_FIGHTER = "/fighterBg.png";
+    public static final String BG_PIRATE = "/pirateBg.png";
     // length outside_sprites.png
     public static final int OUT_SIDE_HEIGHT = 4;
     public static final int OUT_SIDE_WIDTH = 16;

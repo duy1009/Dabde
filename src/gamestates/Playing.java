@@ -32,40 +32,17 @@ public class Playing extends State implements StateMethods{
     private int maxTilesOffsetY = lvlTileHigh-Game.TILES_IN_HEIGHT;
     private int maxLvlOffsetX = maxTilesOffsetX*Game.TILES_SIZE;
     private int maxLvlOffsetY = maxTilesOffsetY*Game.TILES_SIZE;
-    private Vector<Objection> obj = new Vector<>();
+    private Vector<Objection> obj;
     public Playing(Game game) {
         super(game);
         initClass();
     }
-    private void initPlayer(){
-        int[] keyBroad_player_1 = {
-                KeyEvent.VK_W,
-                KeyEvent.VK_S,
-                KeyEvent.VK_A,
-                KeyEvent.VK_D,
-                KeyEvent.VK_G,
-                KeyEvent.VK_T,
-                KeyEvent.VK_Y,
-                KeyEvent.VK_U};
-        int[] keyBroad_player_2 = {
-                KeyEvent.VK_UP,
-                KeyEvent.VK_DOWN,
-                KeyEvent.VK_LEFT,
-                KeyEvent.VK_RIGHT,
-                KeyEvent.VK_NUMPAD1,
-                KeyEvent.VK_NUMPAD4,
-                KeyEvent.VK_NUMPAD5,
-                KeyEvent.VK_NUMPAD6};
-
-        player[0] = new Pirate(1000f,10f, 0,keyBroad_player_1, player, obj);
-        player[1] = new Fighter(450f,100f, 1,keyBroad_player_2, player);
-        player[1].setStatusBarFlip(true);
-    }
-    private void initClass(){
+    public void initClass(){
         levelManager = new LevelManager(game);
 //        initPlayer();
         Character.loadMapData(levelManager.getLevelOne().getLevelData());
-        audioPlayer.playPlayingSong();
+//        audioPlayer.playPlayingSong();
+        obj = new Vector<>();
     }
     public Character[] getPlayer(){return this.player;}
 

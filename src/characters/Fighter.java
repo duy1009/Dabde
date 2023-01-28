@@ -138,7 +138,7 @@ public class Fighter extends Character {
                 skill2Box.y = hitBox.y + 3 * Game.SCALE;
                 skill2Box.x = hitBox.x + hitBox.width/2;
                 if (FlipW == -1){
-                    skill2Speed = -2*Game.SCALE;
+                    skill2Speed = -3f*Game.SCALE;
                     flipWSkill2 = -1;
                     flipXSkill2 = DEFAULT_WIDTH_KUNAI;
                     skill2Box = flipHorBox((int) (hitBox.x + hitBox.width/2),skill2Box);

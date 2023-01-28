@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 
 import static utilz.Constants.MENU_BUTTON;
 import static utilz.Constants.UI.Buttons.*;
+import static utilz.Constants.UI.Buttons.B_HEIGHT;
 
-public class MenuButton {
+public class PickButton {
     private int xPos, yPos, rowIndex, index;
     private int width = B_WIDTH , height = B_HEIGHT;
     private int xOffsetCenter = B_WIDTH/2;
@@ -18,7 +19,7 @@ public class MenuButton {
     private BufferedImage[] imgs;
     private Rectangle bounds;
 
-    public MenuButton(int xPos, int yPos, int rowIndex, GameState state){
+    public PickButton(int xPos, int yPos, int rowIndex, GameState state){
         this.xPos = xPos;
         this.yPos = yPos;
         this.rowIndex = rowIndex;
@@ -37,13 +38,13 @@ public class MenuButton {
         for (int i=0;i< imgs.length;i++)
             imgs[i] = temp.getSubimage(i*B_WIDTH_DEFAULT,rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
     }
-    public void loadImgs(String path){
+    private void loadImgs(String path){
         imgs = new BufferedImage[3];
         BufferedImage temp = LoadSave.GetSpriteAtlas(path);
         for (int i=0;i< imgs.length;i++)
             imgs[i] = temp.getSubimage(i*B_WIDTH_DEFAULT,rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
     }
-    public void setSizeButton(int width, int height){
+    private void setSizeButton(int width, int height){
         this.width = width;
         this.height = height;
     }
