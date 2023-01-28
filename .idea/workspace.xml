@@ -2,11 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dffac82-9c31-47d8-a937-6ef60eff0cb8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/audio/AudioPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gamestates/CharacterPicker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Character.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/Fighter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Fighter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/characters/Pirate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Pirate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gamestates/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/GameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gamestates/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamestates/Playing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/Playing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gamestates/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/MenuButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/MenuButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inputs/MouseInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/MouseInputs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilz/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/Constants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -30,7 +30,7 @@ public class Fighter extends Character {
     private boolean firstEndSkill4;
     private int flipWSkill2 = 1, flipXSkill2 = 0;
     private float skill2Speed = 2*Game.SCALE;
-    private int numOfPlayer = 0;
+
     private Character[] player;
     private Rectangle2D.Float attackBox = new Rectangle2D.Float();
     private Rectangle2D.Float skill2Box = new Rectangle2D.Float();
@@ -47,6 +47,18 @@ public class Fighter extends Character {
                 9, 10);
         super.setAniAction(2, 5, 5, 7, 3);
         numOfPlayer = numberOfPlayer;
+        initAttackBox();
+        this.player = player;
+        kunai = LoadSave.GetSpriteAtlas("/kunai.png");
+        flash = LoadSave.GetSpriteAtlas("/Skill3.png");
+    }
+    public Fighter(Character[] player) {
+        super(0, 0, 126, 80,
+                45, 19, 30f, 50f, // offset and width, height
+                null,
+                PLAYER_1_ATLAS,
+                9, 10);
+        super.setAniAction(2, 5, 5, 7, 3);
         initAttackBox();
         this.player = player;
         kunai = LoadSave.GetSpriteAtlas("/kunai.png");

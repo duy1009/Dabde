@@ -1,5 +1,6 @@
 package gamestates;
 
+import audio.AudioPlayer;
 import characters.Character;
 import characters.Fighter;
 import characters.Pirate;
@@ -11,7 +12,6 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 import static utilz.Constants.MAP1;
@@ -32,7 +32,7 @@ public class Playing extends State implements StateMethods{
     private int maxTilesOffsetY = lvlTileHigh-Game.TILES_IN_HEIGHT;
     private int maxLvlOffsetX = maxTilesOffsetX*Game.TILES_SIZE;
     private int maxLvlOffsetY = maxTilesOffsetY*Game.TILES_SIZE;
-    Vector<Objection> obj = new Vector<>();
+    private Vector<Objection> obj = new Vector<>();
     public Playing(Game game) {
         super(game);
         initClass();
@@ -63,8 +63,9 @@ public class Playing extends State implements StateMethods{
     }
     private void initClass(){
         levelManager = new LevelManager(game);
-        initPlayer();
+//        initPlayer();
         Character.loadMapData(levelManager.getLevelOne().getLevelData());
+        audioPlayer.playPlayingSong();
     }
     public Character[] getPlayer(){return this.player;}
 
@@ -215,5 +216,6 @@ public class Playing extends State implements StateMethods{
     }
     public void setMainCharacter(int num){mainCharacter = num;}
     public int getMainCharacter(){return mainCharacter;}
+    public Vector<Objection> getObj(){return obj;}
 
 }

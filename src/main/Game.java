@@ -1,6 +1,8 @@
 package main;
 
+import audio.AudioPlayer;
 import client.ManagerSocket;
+import gamestates.CharacterPicker;
 import gamestates.GameState;
 import gamestates.Playing;
 
@@ -19,13 +21,14 @@ public class Game implements Runnable{
 
     private Playing playing;
     private Menu menu;
-
+    private AudioPlayer audioPlayer;
+    private CharacterPicker characterPicker;
     private final int FPS_SET = 40;
     private final int UPS_SET = 150;
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1f;
-    public final static int TILES_IN_WIDTH = 25;
-    public final static int TILES_IN_HEIGHT = 12;
+    public final static int TILES_IN_WIDTH = 22;
+    public final static int TILES_IN_HEIGHT = 18;
     public final static int TILES_SIZE = (int)(TILES_DEFAULT_SIZE * SCALE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
@@ -42,6 +45,8 @@ public class Game implements Runnable{
         gameWindow2 = new GameWindow2(gamePanel2);
         gamePanel.requestFocusInWindow();
         gamePanel.requestFocus();
+        gamePanel2.requestFocusInWindow();
+        gamePanel2.requestFocus();
         startGameLoop();
 //        obj.add(ind, value);
 //        obj.remove(ind);
@@ -49,8 +54,12 @@ public class Game implements Runnable{
     }
 
     private void initClass() {
+        audioPlayer = new AudioPlayer();
+        audioPlayer.setVolume(0.9f);
+
         menu = new Menu(this);
         playing = new Playing(this);
+        characterPicker = new CharacterPicker(this);
     }
 
     private void startGameLoop(){
@@ -103,6 +112,9 @@ public class Game implements Runnable{
                 break;
             case QUIT:
                 System.exit(0);
+            case PICK:
+                characterPicker.update();
+                break;
             default:
                 break;
         }
@@ -115,6 +127,9 @@ public class Game implements Runnable{
                 break;
             case PLAYING:
                 playing.draw(g);
+                break;
+            case PICK:
+                characterPicker.draw(g);
                 break;
             default:
                 break;
@@ -129,6 +144,9 @@ public class Game implements Runnable{
             case PLAYING:
                 playing.draw2(g);
                 break;
+            case PICK:
+                characterPicker.draw2(g);
+                break;
             default:
                 break;
         }
@@ -137,4 +155,6 @@ public class Game implements Runnable{
     public GamePanel getGamePanel(){return this.gamePanel;}
     public Menu getMenu(){return menu;}
     public Playing getPlaying(){return playing;}
+    public AudioPlayer getAudioPlayer(){return  audioPlayer;}
+    public CharacterPicker getPick(){return characterPicker;}
 }

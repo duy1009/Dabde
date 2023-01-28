@@ -25,7 +25,8 @@ public class GameWindow2 {
             public void windowLostFocus(WindowEvent e) {
                 Character[] player = gamePanel.getGame().getPlaying().getPlayer();
                 for(int i=0; i< player.length;i++){
-                    player[i].resetDir();
+                    if(player[i] != null)
+                        player[i].resetDir();
                 }
             }
         });

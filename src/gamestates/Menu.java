@@ -1,5 +1,6 @@
 package gamestates;
 
+import audio.AudioPlayer;
 import main.Game;
 import ui.MenuButton;
 
@@ -12,10 +13,11 @@ public class Menu extends State implements StateMethods{
     public Menu(Game game) {
         super(game);
         loadButton();
+        audioPlayer.playMenuSong();
     }
 
     private void loadButton() {
-        buttons[0] = new MenuButton(Game.GAME_WIDTH/2,(int)(150*Game.SCALE),0,GameState.PLAYING );
+        buttons[0] = new MenuButton(Game.GAME_WIDTH/2,(int)(150*Game.SCALE),0,GameState.PICK );
         buttons[1] = new MenuButton(Game.GAME_WIDTH/2,(int)(220*Game.SCALE),1,GameState.OPTIONS );
         buttons[2] = new MenuButton(Game.GAME_WIDTH/2,(int)(290*Game.SCALE),2,GameState.QUIT );
     }

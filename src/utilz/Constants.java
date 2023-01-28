@@ -1,5 +1,6 @@
 package utilz;
 
+import gamestates.GameState;
 import main.Game;
 
 public interface Constants {
@@ -12,6 +13,13 @@ public interface Constants {
             public static final int B_HEIGHT = (int)(B_HEIGHT_DEFAULT* Game.SCALE);
         }
     }
+
+    public class PlayerCharacter{
+        public static final int FIGHTER = 0;
+        public static final int PIRATE = 1;
+
+    }
+
     public static final int CATCHING_TEAM = 1;
     public static final int RUNNING_TEAM = 2;
 
@@ -29,7 +37,7 @@ public interface Constants {
     public static final String BACKGROUND = "/bg_2.png";
     public static final String STATUS_BAR = "/health_power_bar.png";
     public static final String TRAP_ATLAS = "/Bomb.png";
-    public static final String MENU_BUTTON = "/button_atlas.png";
+    public static final String MENU_BUTTON = "/button_atlasv2.png";
 
     // length outside_sprites.png
     public static final int OUT_SIDE_HEIGHT = 4;

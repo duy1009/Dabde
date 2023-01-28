@@ -1,9 +1,11 @@
 package characters;
 
+import gamestates.GameState;
 import main.Game;
 import utilz.LoadSave;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import static utilz.Constants.*;
@@ -68,8 +70,8 @@ public abstract class Character extends Entity{
     private int maxHealth = 1000;
     private int currentHealth = maxHealth;
     private int healthWidth = healthBarWidth;
-
-
+    private float HB_width=0, HB_height=0;
+    protected int numOfPlayer = 0;
     public Character(float x, float y,int width, int height,
                           float HB_x, float HB_y,float HB_width, float HB_height,
                           int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
@@ -82,18 +84,22 @@ public abstract class Character extends Entity{
         setControl(ctrl);
         this.ani_col_max = ani_col_max; this.ani_row_max = ani_row_max;
 
-
         loadAnimation(animation_path, true);
         this.xDrawOffset = HB_x* width * Game.SCALE / chr_w;;
         this.yDrawOffset = HB_y* height * Game.SCALE / chr_h;
-
+        this.HB_width = HB_width;
+        this.HB_height = HB_height;
         initHitBox(x, y, HB_width* width/ chr_w, HB_height* height/ chr_h);
 
         heightHitBoxDown = 0.5f*hitBox.height;
         heightHitBoxNotDown = hitBox.height;
 
     }
-
+    public void setParameter(float x, float y, int numberOfPlayer, int[] keyBroad_player){
+        initHitBox(x, y, HB_width* width/ chr_w, HB_height* height/ chr_h);
+        this.numOfPlayer = numberOfPlayer;
+        setControl(keyBroad_player);
+    }
 
     private void loadAnimation(String path, boolean addFlip) {
         img = LoadSave.GetSpriteAtlas(path);
@@ -273,15 +279,26 @@ public abstract class Character extends Entity{
 
 
     public void setControl(int[] ctrl){
-        this.up_ctrl = ctrl[0];
-        this.down_ctrl = ctrl[1];
-        this.left_ctrl = ctrl[2];
-        this.right_ctrl = ctrl[3];
+        if(ctrl == null) {
+            this.up_ctrl = KeyEvent.VK_W;
+            this.down_ctrl = KeyEvent.VK_S;
+            this.left_ctrl = KeyEvent.VK_A;
+            this.right_ctrl = KeyEvent.VK_D;
+            this.skill_1_ctrl = KeyEvent.VK_G;
+            this.skill_2_ctrl = KeyEvent.VK_T;
+            this.skill_3_ctrl = KeyEvent.VK_Y;
+            this.skill_4_ctrl = KeyEvent.VK_U;
+        }else{
+            this.up_ctrl = ctrl[0];
+            this.down_ctrl = ctrl[1];
+            this.left_ctrl = ctrl[2];
+            this.right_ctrl = ctrl[3];
 
-        this.skill_1_ctrl = ctrl[4];
-        this.skill_2_ctrl = ctrl[5];
-        this.skill_3_ctrl = ctrl[6];
-        this.skill_4_ctrl = ctrl[7];
+            this.skill_1_ctrl = ctrl[4];
+            this.skill_2_ctrl = ctrl[5];
+            this.skill_3_ctrl = ctrl[6];
+            this.skill_4_ctrl = ctrl[7];
+        }
     }
     public int getUpCtrl(){return up_ctrl;}
     public int getDownCtrl(){return down_ctrl;}
@@ -307,8 +324,11 @@ public abstract class Character extends Entity{
     }
     public void addHP(int val){
         currentHealth += val;
-        if (currentHealth <0)
+        if (currentHealth <0){
             currentHealth=0;
+            GameState.state = GameState.MENU;
+        }
+
         else if(currentHealth > maxHealth)
             currentHealth = maxHealth;
     }

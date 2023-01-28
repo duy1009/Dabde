@@ -28,7 +28,7 @@ public class Pirate extends Character{
     private int SKILL_4_WORK_TIME = 4000;
     private float RATIO_SKILL_2 = 2f;
     private long preTimeSkill1 = 0, preTimeSkill2 = 0, preTimeSkill3 = 0, preTimeSkill4 = 0;
-    private int numOfPlayer = 0;
+
     private Character[] player;
     private Rectangle2D.Float attackBox = new Rectangle2D.Float();
     private Rectangle2D.Float skill2Box = new Rectangle2D.Float();
@@ -57,6 +57,18 @@ public class Pirate extends Character{
         this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
 
     }
+    public Pirate(Character[] player, Vector<Objection> obj){
+        super(0, 0 , 126,80,
+                24, 6, 15f, 25f,
+                null,
+                PLAYER_2_ATLAS,
+                8, 8);
+        super.setAniAction(0,1,2,7,3);
+        this.obj = obj;
+        this.player = player;
+        this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
+    }
+
 
     protected void updateSkill() {
         long currentTime = System.currentTimeMillis();
