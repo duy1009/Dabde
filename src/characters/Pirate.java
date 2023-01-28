@@ -40,8 +40,10 @@ public class Pirate extends Character{
     private boolean firstEndSkill4;
     private int applyAniSkill4 = 0;
     private BufferedImage[][] trapAni;
-    Vector<Objection> obj;
-    int indX, indY;
+    private Vector<Objection> obj;
+    private int indX1=-1, indY1=-1, indX2=-1, indY2=-1, indX3=-1, indY3=-1;
+    private final int SKILL_4_TICK_DEFAULT = 60;
+    private int skill4Tick = SKILL_4_TICK_DEFAULT;
 
     public Pirate(float x, float y, int numberOfPlayer, int[] keyBroad_player, Character[] player, Vector<Objection> obj){
         super(x, y , 126,80,
@@ -87,7 +89,9 @@ public class Pirate extends Character{
             skill_4 = false;
         }
         if(!skill_4 && firstEndSkill4){
-            mapData[indY][indX] = AIR_BLOCK; // Air block
+            createAirBlock(indX1, indY1);
+            createAirBlock(indX2, indY2);
+            createAirBlock(indX3, indY3);
             firstEndSkill4 = false;
         }
         if(!skill_2 && firstEndSkill2){
@@ -156,20 +160,48 @@ public class Pirate extends Character{
         if(skill_4){
             if(firstUpdateSkill4){
                 if(FlipW == 1){
-                    indX = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1);
+                    indX1 = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1);
+                    indX2 = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1)+1;
+                    indX3 = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1)+1;
                 }else {
-                    indX = (int)(hitBox.x/Game.TILES_SIZE - 1);
+                    indX1 = (int)(hitBox.x/Game.TILES_SIZE - 1);
+                    indX2 = (int)(hitBox.x/Game.TILES_SIZE - 1)-1;
+                    indX3 = (int)(hitBox.x/Game.TILES_SIZE - 1)-1;
                 }
-                indY = (int)(hitBox.y/Game.TILES_SIZE);
-                if(indX<mapData[0].length && indX>=0){
-                    if(indY<mapData.length && indY>=0)
-                        mapData[indY][indX] = ICE_BLOCK;
-                }else{
+                indY1 = (int)(hitBox.y/Game.TILES_SIZE);
+                indY2 = (int)(hitBox.y/Game.TILES_SIZE);
+                indY3 = (int)(hitBox.y/Game.TILES_SIZE)-1;
+
+                if(!createIceBlock(indX1, indY1))
                     preTimeSkill4 = 0;
-                }
                 firstUpdateSkill4 = false;
             }
+            else if(skill4Tick == 0){
+                createIceBlock(indX2, indY2);
+                createIceBlock(indX3, indY3);
+            }
+            skill4Tick--;
         }
+    }
+    private boolean inMap(int indX, int indY){
+        if(indX<mapData[0].length && indX>=0)
+            if(indY<mapData.length && indY>=0)
+                return true;
+        return false;
+    }
+    private boolean createIceBlock(int indX, int indY){
+        if(inMap(indX,indY)) {
+            mapData[indY][indX] = ICE_BLOCK;
+            return true;
+        }
+        return false;
+    }
+    private boolean createAirBlock(int indX, int indY){
+        if(inMap(indX,indY)) {
+            mapData[indY][indX] = AIR_BLOCK;
+            return true;
+        }
+        return false;
     }
 
 
@@ -211,6 +243,7 @@ public class Pirate extends Character{
             firstUpdateSkill4 = true;
             firstEndSkill4 = true;
             applyAniSkill4 = aniSpeed*4;
+            skill4Tick = SKILL_4_TICK_DEFAULT;
             preTimeSkill4 = System.currentTimeMillis();
         }
     }

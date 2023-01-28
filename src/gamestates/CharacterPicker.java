@@ -72,8 +72,8 @@ public class CharacterPicker extends State implements StateMethods{
         player[0] = pick(p1);
         player[1] = pick(p2);
 
-        player[0].setParameter(1000f,10f, 0, keyBroad_player_1);
-        player[1].setParameter(450f,100f, 1,keyBroad_player_2);
+        player[0].setParameter( 450f,100f,0, keyBroad_player_1);
+        player[1].setParameter(1000f,10f, 1,keyBroad_player_2);
 //        player[0] = new Pirate(1000f,10f, 0,keyBroad_player_1, player, game.getPlaying().getObj());
 //        player[1] = new Fighter(450f,100f, 1,keyBroad_player_2, player);
         player[1].setStatusBarFlip(true);
@@ -200,9 +200,7 @@ public class CharacterPicker extends State implements StateMethods{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            GameState.state = GameState.PLAYING;
-        }
+
     }
 
     @Override
