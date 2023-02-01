@@ -116,9 +116,9 @@ public class Pirate extends Character{
             }
             if (activateAttackBox){
                 attackBox.width = 45*Game.SCALE;
-                attackBox.height = 20*Game.SCALE;
+                attackBox.height = 34*Game.SCALE;
                 attackBox.x = hitBox.x + 30*Game.SCALE;
-                attackBox.y = hitBox.y + 25*Game.SCALE;
+                attackBox.y = hitBox.y + 18*Game.SCALE;
                 if (this.FlipW == -1)
                     attackBox = flipHorBox((int)(this.hitBox.x + this.hitBox.width/2),attackBox);
 
@@ -148,9 +148,7 @@ public class Pirate extends Character{
             if(firstUpdateSkill3){
                 Traps newTrap = new Traps(hitBox.x, hitBox.y,
                         0f,0f,25f,21f,
-                        trapAni,
-                        numOfPlayer, player, FlipW,
-                        obj, mapData);
+                        trapAni, numOfPlayer, player, FlipW, mapData);
                 this.obj.add(newTrap);
                 firstUpdateSkill3 = false;
             }
@@ -263,8 +261,7 @@ public class Pirate extends Character{
 
     @Override
     protected void renderSkill(Graphics g,int xLvlOffset,int yLvlOffset) {
-        if(activateAttackBox)
-            renderAttackBox(g, xLvlOffset, yLvlOffset);
-
+//        if(activateAttackBox)
+//            renderAttackBox(g, xLvlOffset, yLvlOffset);
     }
 }

@@ -20,16 +20,21 @@ public class Traps extends Objection{
     private float slow = 0.5f;
     private long preTime = 0;
     private int playerEffect =0;
+    private final int BASIC_DAME = 50;
+    private final int TIME_PLUS_DAME = 1000;
+    private final int DAME_PLUS = 20;
+    private final int DAME_MAX = 200;
+    private int dame = BASIC_DAME;
+    private long preTimeAddDame = 0;
     public Traps(float x, float y,
                  float HB_x, float HB_y, float HB_w, float HB_h,
                  BufferedImage[][] ani,
-                 int numOfPlayer, Character[] player, float FlipW,
-                 Vector<Objection> obj, int[][] map
+                 int numOfPlayer, Character[] player, float FlipW, int[][] map
     ){
         super(x, y, HB_x, HB_y, HB_w, HB_h, ani, numOfPlayer, FlipW);
         this.player = player;
-        this.obj = obj;
         this.map = map;
+        preTimeAddDame = System.currentTimeMillis();
     }
     @Override
     protected void updatePos(){
@@ -38,7 +43,7 @@ public class Traps extends Objection{
                 for(int i=0;i<player.length;i++){
                     if(i!= numOfPlayer){
                         if(HelpMethods.boxCollision(hitBox, player[i].getHitBox())){
-                            player[i].addHP(-50);
+                            player[i].addHP(-dame);
                             player[i].changeSpeed(slow);
                             activateAni = false;
                             effect = true;
@@ -62,6 +67,15 @@ public class Traps extends Objection{
                     activate = false;
                 }
             }
+
+            if(dame < DAME_MAX){
+                if(System.currentTimeMillis() - preTimeAddDame > TIME_PLUS_DAME){
+                    dame += DAME_PLUS;
+                    preTimeAddDame = System.currentTimeMillis();
+                }
+            }
+
         }
     }
+
 }

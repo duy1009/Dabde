@@ -273,12 +273,12 @@ public class Fighter extends Character {
         if(skill_3){
             renderSkill3(g, xLvlOffset, yLvlOffset);
         }
-        if(activateAttackBox)
-            renderAttackBox(g, xLvlOffset, yLvlOffset);
-        if(activateBox2)
-            renderBox2(g, xLvlOffset, yLvlOffset);
-        if(activateBox4)
-            renderBox4(g, xLvlOffset, yLvlOffset);
+//        if(activateAttackBox)
+//            renderAttackBox(g, xLvlOffset, yLvlOffset);
+//        if(activateBox2)
+//            renderBox2(g, xLvlOffset, yLvlOffset);
+//        if(activateBox4)
+//            renderBox4(g, xLvlOffset, yLvlOffset);
     }
     @Override
     public void setSkill_1(boolean val){

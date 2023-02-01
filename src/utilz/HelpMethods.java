@@ -91,5 +91,14 @@ public class HelpMethods {
         box.x = 2*x - box.x - box.width;
         return box;
     }
+    public static void drawRect(Graphics g, int x, int y, int width, int height, int stroke){
+//        for(int i=0;i<stroke;i++){
+//            g.drawRect(x+i,y+i,width-i*2,height-i*2);
+//        }
+        g.fillRect(x,y, stroke,height-1);
+        g.fillRect(x+width-1,y, stroke,height);
+        g.fillRect(x,y, width-1,stroke);
+        g.fillRect(x,y+height-2, width,stroke);
+    }
 
 }

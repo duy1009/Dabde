@@ -193,7 +193,7 @@ public abstract class Character extends Entity{
                 (int) (hitBox.y - yDrawOffset - yLvlOffset),
                 (int)width*FlipW,(int)height, null);
 
-        drawHitBox(g, xLvlOffset, yLvlOffset);
+//        drawHitBox(g, xLvlOffset, yLvlOffset);
         renderSkill(g, xLvlOffset, yLvlOffset);
         drawUI(g);
     }

@@ -31,7 +31,7 @@ public interface Constants {
 
 
     public static final String PLAYER_1_ATLAS = "/player_1_4.png";
-    public static final String PLAYER_2_ATLAS = "/player_2_2.png";
+    public static final String PLAYER_2_ATLAS = "/player_2_3.png";
     public static final String LEVEL_ATLAS = "/outside_sprites_v4.png";
     public static final String MAP1 = "/Map2.png";
     public static final String BACKGROUND = "/bg_2.png";

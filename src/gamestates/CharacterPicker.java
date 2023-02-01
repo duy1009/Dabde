@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import characters.Character;
+import utilz.HelpMethods;
 import utilz.LoadSave;
 
 import static utilz.Constants.*;
@@ -108,6 +109,7 @@ public class CharacterPicker extends State implements StateMethods{
                 return true;
         return false;
     }
+
     @Override
     public void update() {
         for(MenuButton mb: buttons)
@@ -122,8 +124,9 @@ public class CharacterPicker extends State implements StateMethods{
             mb.draw(g);
         g.drawImage(pickTable, X_OFFSET_TABLE, Y_OFFSET_TABLE, TABLE_SIZE_W, TABLE_SIZE_H, null);
         g.setColor(Color.RED);
-        g.drawRect(xPick*TITLE_TABLE + X_OFFSET_TABLE, yPick*TITLE_TABLE + Y_OFFSET_TABLE, TITLE_TABLE,TITLE_TABLE);
+//        g.drawRect(xPick*TITLE_TABLE + X_OFFSET_TABLE, yPick*TITLE_TABLE + Y_OFFSET_TABLE, TITLE_TABLE,TITLE_TABLE);
 
+        HelpMethods.drawRect(g,xPick*TITLE_TABLE + X_OFFSET_TABLE, yPick*TITLE_TABLE + Y_OFFSET_TABLE, TITLE_TABLE, TITLE_TABLE, 3);
     }
     @Override
     public void draw2(Graphics g){}
