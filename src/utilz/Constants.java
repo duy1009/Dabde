@@ -46,8 +46,8 @@ public interface Constants {
     // player speed
     public static final float PLAYER_SPEED_DEFAULT = 1.5f;
     public static final int ANI_SPEED_DEFAULT = 15;
-
-
+    public static final int TICK_BOX_SIZE = 51;
+    public static final int TICK_BOX_DISTANCE = 21;
 
     public static final String PLAYER_1_ATLAS = "/player_1_4.png";
     public static final String PLAYER_2_ATLAS = "/player_2_3.png";
@@ -69,9 +69,10 @@ public interface Constants {
     public static final String BACK_BUTTON = "/buttons/urm_b2.png";
     public static final String VOLUME_BUTTON = "/buttons/volume_buttons.png";
     public static final String VOLUME_BAR = "/buttons/volume_bar.png";
-    public static final String SETTING_BG = "/options_background.png";
+    public static final String SETTING_BG = "/bg_optionv2.jpg";
     public static final String TABLE_PICK = "/choose_charactersv2.png";
-
+    public static final String TICK_BUTTON = "/buttons/tick.png";
+    public static final String BOX_BUTTON = "/buttons/box.png";
     public static final String BG_FIGHTER = "/fighterBg.png";
     public static final String BG_PIRATE = "/pirateBg.png";
     // length outside_sprites.png

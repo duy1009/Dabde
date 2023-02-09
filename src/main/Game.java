@@ -22,7 +22,7 @@ public class Game implements Runnable{
     private Setting setting;
     private AudioPlayer audioPlayer;
     private CharacterPicker characterPicker;
-    private final int FPS_SET = 40;
+    private int FPS_SET = 60;
     private final int UPS_SET = 150;
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 1f;
@@ -68,7 +68,7 @@ public class Game implements Runnable{
     }
     @Override
     public void run(){
-        double timePerFrame = 1000000000.0/FPS_SET;
+
         double timePerUpdate = 1000000000.0/UPS_SET;
         long pre_time = System.nanoTime();
         long curr_time;
@@ -77,6 +77,7 @@ public class Game implements Runnable{
 
         long lastCheck = System.currentTimeMillis();
         while (true){
+            double timePerFrame = 1000000000.0/FPS_SET;
             curr_time = System.nanoTime();
             DeltaU += (curr_time-pre_time)/timePerUpdate;
             DeltaF += (curr_time-pre_time)/timePerFrame;
@@ -164,4 +165,5 @@ public class Game implements Runnable{
     public AudioPlayer getAudioPlayer(){return  audioPlayer;}
     public CharacterPicker getPick(){return characterPicker;}
     public Setting getOption(){return setting;}
+    public void setFPS(int value){this.FPS_SET = value;}
 }

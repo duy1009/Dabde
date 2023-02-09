@@ -2,6 +2,7 @@ package gamestates;
 
 import main.Game;
 import ui.Button;
+import ui.ListTickBox;
 import ui.ScrollBar;
 import ui.VolumeButton;
 import utilz.LoadSave;
@@ -19,9 +20,10 @@ public class Setting extends State implements StateMethods{
     private Button[] buttons = new Button[2];
     private ScrollBar volumeButton;
     private BufferedImage bg;
+    private ListTickBox listTickBox;
 
     private int xBGPos, yBGPos, bGWidth, bGHeight;
-    private boolean isScroll = false;
+
     public Setting(Game game) {
         super(game);
         loadButton();
@@ -32,7 +34,9 @@ public class Setting extends State implements StateMethods{
     private void loadButton() {
         buttons[0] = new Button((int)(Game.GAME_WIDTH*0.1),(int)(0.85*Game.GAME_HEIGHT),URM_SIZE, URM_SIZE, HOME_BUTTON,GameState.MENU );
         buttons[1] = new Button((int)(Game.GAME_WIDTH*0.9),(int)(0.85*Game.GAME_HEIGHT),URM_SIZE, URM_SIZE, BACK_BUTTON,GameState.MENU );
-        volumeButton = new ScrollBar((int)(Game.GAME_WIDTH*0.5), (int)(0.65*Game.GAME_HEIGHT), SLIDER_WIDTH, VOLUME_HEIGHT);
+        volumeButton = new ScrollBar((int)(Game.GAME_WIDTH*0.5), (int)(0.68*Game.GAME_HEIGHT), SLIDER_WIDTH, VOLUME_HEIGHT);
+        listTickBox = new ListTickBox((int)(Game.GAME_WIDTH*0.52), (int)(Game.GAME_HEIGHT*0.4), 3,TICK_BOX_SIZE, TICK_BOX_DISTANCE, false);
+        listTickBox.Tick(1);
     }
     private void loadBG(){
         bg = LoadSave.GetSpriteAtlas(SETTING_BG);
@@ -54,6 +58,7 @@ public class Setting extends State implements StateMethods{
         for(Button mb: buttons)
             mb.draw(g);
         volumeButton.draw(g);
+        listTickBox.draw(g);
 
     }
     @Override
@@ -70,13 +75,22 @@ public class Setting extends State implements StateMethods{
                 mb.setMousePressed(true);
             }
         }
-        if(volumeButton.isIn(e)) {
-            isScroll = true;
-        }
         volumeButton.updateBar(e);
 
         game.getAudioPlayer().setVolume(volumeButton.getValue());
+        listTickBox.mousePressed(e);
 
+        switch (listTickBox.getElement()){
+            case 0:
+                game.setFPS(30);
+                break;
+            case 1:
+                game.setFPS(60);
+                break;
+            case 2:
+                game.setFPS(120);
+                break;
+        }
 
     }
 
@@ -92,7 +106,6 @@ public class Setting extends State implements StateMethods{
             }
         }
 
-        isScroll = false;
         resetButtons();
     }
 

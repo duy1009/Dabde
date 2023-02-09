@@ -2,28 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dffac82-9c31-47d8-a937-6ef60eff0cb8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/res/buttons/volume_bar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/buttons/volume_buttons.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/options_background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/urm_buttons.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/volume_buttons.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gamestates/Setting.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/AudioOptions.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/Button.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/ScrollBar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ui/VolumeButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/ListTickBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ui/TickBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/skill/Traps.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/skill/Traps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamestates/CharacterPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/CharacterPicker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamestates/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gamestates/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/KeybroadInputs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/inputs/MouseInputs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/inputs/MouseInputs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gamestates/Setting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gamestates/Setting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/MenuButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/MenuButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui/PickButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/PickButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utilz/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utilz/LoadSave.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utilz/LoadSave.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,15 +38,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/Java/Dabde_v1/res",
-    "settings.editor.selected.configurable": "preferences.general"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Java/Dabde_v1/res&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Java\Dabde_v1\res" />
