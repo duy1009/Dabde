@@ -75,6 +75,8 @@ public interface Constants {
     public static final String BOX_BUTTON = "/buttons/box.png";
     public static final String BG_FIGHTER = "/fighterBg.png";
     public static final String BG_PIRATE = "/pirateBg.png";
+    public static final String BG_MENU = "/Bg_menu.jpg";
+    public static final String DABDE = "/Dabde.png";
     // length outside_sprites.png
     public static final int OUT_SIDE_HEIGHT = 4;
     public static final int OUT_SIDE_WIDTH = 16;
