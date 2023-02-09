@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static utilz.Constants.OUT_SIDE_HEIGHT;
-import static utilz.Constants.OUT_SIDE_WIDTH;
+import static utilz.Constants.*;
+import static utilz.Constants.UI.Buttons.B_HEIGHT_DEFAULT;
+import static utilz.Constants.UI.Buttons.B_WIDTH_DEFAULT;
 
 public class LoadSave {
     public static BufferedImage GetSpriteAtlas(String path){

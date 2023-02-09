@@ -49,6 +49,9 @@ public class KeybroadInputs implements KeyListener{
             case PICK:
                 gamePanel.getGame().getPick().keyPressed(e);
                 break;
+            case OPTIONS:
+                gamePanel.getGame().getOption().keyPressed(e);
+                break;
             default:
                 break;
         }
@@ -64,6 +67,9 @@ public class KeybroadInputs implements KeyListener{
                 break;
             case PICK:
                 gamePanel.getGame().getPick().keyReleased(e);
+                break;
+            case OPTIONS:
+                gamePanel.getGame().getOption().keyReleased(e);
                 break;
             default:
                 break;

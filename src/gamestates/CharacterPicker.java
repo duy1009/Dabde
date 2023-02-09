@@ -3,7 +3,6 @@ package gamestates;
 import characters.Fighter;
 import characters.Pirate;
 import main.Game;
-import ui.MenuButton;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,12 +13,16 @@ import characters.Character;
 import utilz.HelpMethods;
 import utilz.LoadSave;
 
+import ui.Button;
 import static utilz.Constants.*;
 import static utilz.Constants.PlayerCharacter.FIGHTER;
 import static utilz.Constants.PlayerCharacter.PIRATE;
+import static utilz.Constants.UI.Buttons.B_MENU_HEIGHT;
+import static utilz.Constants.UI.Buttons.B_MENU_WIDTH;
+import static utilz.Constants.UI.URMButtons.URM_SIZE;
 
 public class CharacterPicker extends State implements StateMethods{
-    private MenuButton[] buttons = new MenuButton[3];
+    private Button[] buttons = new Button[5];
     private BufferedImage pickTable;
     private BufferedImage[] BG_chr ;
     private BufferedImage bgP1, bgP2;
@@ -46,9 +49,13 @@ public class CharacterPicker extends State implements StateMethods{
     }
 
     private void loadButton() {
-        buttons[0] = new MenuButton((int)(Game.GAME_WIDTH/2 - 150*Game.SCALE),(int)(0.7*Game.GAME_HEIGHT),4,GameState.PICK);
-        buttons[1] = new MenuButton((int)(Game.GAME_WIDTH/2 + 150*Game.SCALE),(int)(0.7*Game.GAME_HEIGHT),5,GameState.PICK);
-        buttons[2] = new MenuButton((int)(Game.GAME_WIDTH/2 ),(int)(0.85*Game.GAME_HEIGHT),6,GameState.PLAYING);
+        buttons[0] = new Button((int)(Game.GAME_WIDTH/2 - 150*Game.SCALE),(int)(0.7*Game.GAME_HEIGHT),B_MENU_WIDTH, B_MENU_HEIGHT, MENU_BUTTON4,GameState.PICK);
+        buttons[1] = new Button((int)(Game.GAME_WIDTH/2 + 150*Game.SCALE),(int)(0.7*Game.GAME_HEIGHT),B_MENU_WIDTH, B_MENU_HEIGHT, MENU_BUTTON5,GameState.PICK);
+        buttons[2] = new Button((int)(Game.GAME_WIDTH/2 ),(int)(0.85*Game.GAME_HEIGHT),B_MENU_WIDTH, B_MENU_HEIGHT, MENU_BUTTON6,GameState.PLAYING);
+
+        buttons[3] = new Button((int)(Game.GAME_WIDTH*0.1),(int)(0.85*Game.GAME_HEIGHT),URM_SIZE, URM_SIZE, HOME_BUTTON,GameState.MENU );
+        buttons[4] = new Button((int)(Game.GAME_WIDTH*0.9),(int)(0.85*Game.GAME_HEIGHT),URM_SIZE, URM_SIZE, BACK_BUTTON,GameState.MENU );
+
     }
     private void initPlayer(){
         int[] keyBroad_player_1 = {
@@ -112,7 +119,7 @@ public class CharacterPicker extends State implements StateMethods{
 
     @Override
     public void update() {
-        for(MenuButton mb: buttons)
+        for(Button mb: buttons)
             mb.update();
     }
 
@@ -120,7 +127,7 @@ public class CharacterPicker extends State implements StateMethods{
     public void draw(Graphics g) {
         g.drawImage(bgP1, 0,0, (int)(Game.GAME_WIDTH*0.4), Game.GAME_HEIGHT,null);
         g.drawImage(bgP2, Game.GAME_WIDTH,0, (int)(Game.GAME_WIDTH*-0.4), Game.GAME_HEIGHT,null);
-        for(MenuButton mb: buttons)
+        for(Button mb: buttons)
             mb.draw(g);
         g.drawImage(pickTable, X_OFFSET_TABLE, Y_OFFSET_TABLE, TABLE_SIZE_W, TABLE_SIZE_H, null);
         g.setColor(Color.RED);
@@ -137,7 +144,7 @@ public class CharacterPicker extends State implements StateMethods{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        for(MenuButton mb: buttons){
+        for(Button mb: buttons){
             if(isIn(e, mb)){
                 mb.setMousePressed(true);
             }
@@ -182,19 +189,26 @@ public class CharacterPicker extends State implements StateMethods{
                 buttons[2].applyGameState();
             }
         }
+        for(int i = 3;i<5;i++){
+            if(isIn(e, buttons[i])) {
+                if (buttons[i].isMousePressed()) {
+                    buttons[i].applyGameState();
+                }
+            }
+        }
         resetButtons();
     }
 
     private void resetButtons() {
-        for(MenuButton mb: buttons)
+        for(Button mb: buttons)
             mb.resetBools();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        for(MenuButton mb: buttons)
+        for(Button mb: buttons)
             mb.setMouseOver(false);
-        for(MenuButton mb: buttons)
+        for(Button mb: buttons)
             if(isIn(e, mb)){
                 mb.setMouseOver(true);
                 break;

@@ -8,12 +8,11 @@ import java.awt.image.BufferedImage;
 
 import static utilz.Constants.MENU_BUTTON;
 import static utilz.Constants.UI.Buttons.*;
-import static utilz.Constants.UI.Buttons.B_HEIGHT;
 
 public class PickButton {
     private int xPos, yPos, rowIndex, index;
-    private int width = B_WIDTH , height = B_HEIGHT;
-    private int xOffsetCenter = B_WIDTH/2;
+    private int width = B_MENU_WIDTH , height = B_MENU_HEIGHT;
+    private int xOffsetCenter = B_MENU_WIDTH/2;
     private boolean mouseOver, mousePressed;
     private GameState state;
     private BufferedImage[] imgs;
@@ -29,7 +28,7 @@ public class PickButton {
     }
 
     private void initBounds() {
-        bounds = new Rectangle(xPos-xOffsetCenter, yPos, B_WIDTH, B_HEIGHT);
+        bounds = new Rectangle(xPos-xOffsetCenter, yPos, B_MENU_WIDTH, B_MENU_HEIGHT);
     }
 
     private void loadImgs() {

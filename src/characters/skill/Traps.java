@@ -12,7 +12,7 @@ import static utilz.HelpMethods.IsSolidBox;
 public class Traps extends Objection{
     private final int EFFECT_TIME = 1500;
     private Character[] player;
-    private Vector<Objection> obj;
+
     private int[][] map;
     private float airSpeed = 0;
     private float gravity = 0.04f* Game.SCALE;

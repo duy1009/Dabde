@@ -6,43 +6,27 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static utilz.Constants.MENU_BUTTON;
-import static utilz.Constants.UI.Buttons.*;
 
-public class MenuButton {
-    private int xPos, yPos, rowIndex, index;
-    private int B_WIDTH = B_MENU_WIDTH, B_HEIGHT = B_MENU_HEIGHT;
-    private int width = B_WIDTH , height = B_HEIGHT;
-    private int xOffsetCenter = B_WIDTH/2;
+public class Button {
+    private int xPos, yPos, index;
+    private int width, height;
+    private int xOffsetCenter;
     private boolean mouseOver, mousePressed;
     private GameState state;
     private BufferedImage[] imgs;
     private Rectangle bounds;
-
-    public MenuButton(int xPos, int yPos, int rowIndex, GameState state){
+    public Button(int xPos, int yPos, int width, int height, String path_img, GameState state){
         this.xPos = xPos;
         this.yPos = yPos;
-        this.rowIndex = rowIndex;
+        this.width = width;
+        this.height = height;
+        xOffsetCenter = width/2;
         this.state = state;
-        loadImgs();
+        imgs = LoadSave.loadArrayAni_1D(path_img, 3);
         initBounds();
     }
-
     private void initBounds() {
-        bounds = new Rectangle(xPos-xOffsetCenter, yPos, B_WIDTH, B_HEIGHT);
-    }
-
-    private void loadImgs() {
-        imgs = new BufferedImage[3];
-        BufferedImage temp = LoadSave.GetSpriteAtlas(MENU_BUTTON);
-        for (int i=0;i< imgs.length;i++)
-            imgs[i] = temp.getSubimage(i*B_WIDTH_DEFAULT,rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
-    }
-    public void loadImgs(String path){
-        imgs = new BufferedImage[3];
-        BufferedImage temp = LoadSave.GetSpriteAtlas(path);
-        for (int i=0;i< imgs.length;i++)
-            imgs[i] = temp.getSubimage(i*B_WIDTH_DEFAULT,rowIndex * B_HEIGHT_DEFAULT, B_WIDTH_DEFAULT, B_HEIGHT_DEFAULT);
+        bounds = new Rectangle(xPos-xOffsetCenter, yPos, width, height);
     }
     public void setSizeButton(int width, int height){
         this.width = width;
@@ -82,4 +66,8 @@ public class MenuButton {
         mousePressed = false;
     }
     public Rectangle getBounds(){return bounds;}
+    public void setXPos(int xPos){
+        this.xPos=xPos;
+        this.bounds.x = xPos - xOffsetCenter;
+    }
 }

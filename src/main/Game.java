@@ -2,11 +2,9 @@ package main;
 
 import audio.AudioPlayer;
 import client.ManagerSocket;
-import gamestates.CharacterPicker;
-import gamestates.GameState;
-import gamestates.Playing;
-
+import gamestates.*;
 import gamestates.Menu;
+
 import java.awt.*;
 
 import java.io.IOException;
@@ -21,6 +19,7 @@ public class Game implements Runnable{
 
     private Playing playing;
     private Menu menu;
+    private Setting setting;
     private AudioPlayer audioPlayer;
     private CharacterPicker characterPicker;
     private final int FPS_SET = 40;
@@ -60,6 +59,7 @@ public class Game implements Runnable{
         menu = new Menu(this);
         playing = new Playing(this);
         characterPicker = new CharacterPicker(this);
+        setting = new Setting(this);
     }
 
     private void startGameLoop(){
@@ -109,6 +109,7 @@ public class Game implements Runnable{
                 playing.update();
                 break;
             case OPTIONS:
+                setting.update();
                 break;
             case QUIT:
                 System.exit(0);
@@ -131,6 +132,8 @@ public class Game implements Runnable{
             case PICK:
                 characterPicker.draw(g);
                 break;
+            case OPTIONS:
+                setting.draw(g);
             default:
                 break;
         }
@@ -147,6 +150,9 @@ public class Game implements Runnable{
             case PICK:
                 characterPicker.draw2(g);
                 break;
+            case OPTIONS:
+                setting.draw2(g);
+                break;
             default:
                 break;
         }
@@ -157,4 +163,5 @@ public class Game implements Runnable{
     public Playing getPlaying(){return playing;}
     public AudioPlayer getAudioPlayer(){return  audioPlayer;}
     public CharacterPicker getPick(){return characterPicker;}
+    public Setting getOption(){return setting;}
 }

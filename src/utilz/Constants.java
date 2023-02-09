@@ -5,12 +5,33 @@ import main.Game;
 
 public interface Constants {
 
-    public static class UI{
-        public static class Buttons{
+    public static class UI {
+        public static class Buttons {
             public static final int B_WIDTH_DEFAULT = 140;
             public static final int B_HEIGHT_DEFAULT = 56;
-            public static final int B_WIDTH = (int)(B_WIDTH_DEFAULT* Game.SCALE);
-            public static final int B_HEIGHT = (int)(B_HEIGHT_DEFAULT* Game.SCALE);
+            public static final int B_MENU_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
+            public static final int B_MENU_HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
+        }
+
+        public static class PauseButtons {
+            public static final int SOUND_SIZE_DEFAULT = 42;
+            public static final int SOUND_SIZE = (int) (SOUND_SIZE_DEFAULT * Game.SCALE);
+        }
+
+        public static class URMButtons {
+            public static final int URM_DEFAULT_SIZE = 56;
+            public static final int URM_SIZE = (int) (URM_DEFAULT_SIZE * Game.SCALE);
+
+        }
+
+        public static class VolumeButtons {
+            public static final int VOLUME_DEFAULT_WIDTH = 28;
+            public static final int VOLUME_DEFAULT_HEIGHT = 44;
+            public static final int SLIDER_DEFAULT_WIDTH = 215;
+
+            public static final int VOLUME_WIDTH = (int) (VOLUME_DEFAULT_WIDTH * Game.SCALE);
+            public static final int VOLUME_HEIGHT = (int) (VOLUME_DEFAULT_HEIGHT * Game.SCALE);
+            public static final int SLIDER_WIDTH = (int) (SLIDER_DEFAULT_WIDTH * Game.SCALE);
         }
     }
 
@@ -20,8 +41,6 @@ public interface Constants {
 
     }
 
-    public static final int CATCHING_TEAM = 1;
-    public static final int RUNNING_TEAM = 2;
 
 
     // player speed
@@ -38,6 +57,19 @@ public interface Constants {
     public static final String STATUS_BAR = "/health_power_bar.png";
     public static final String TRAP_ATLAS = "/Bomb.png";
     public static final String MENU_BUTTON = "/button_atlasv2.png";
+    public static final String MENU_BUTTON1 = "/buttons/b1.png";
+    public static final String MENU_BUTTON2 = "/buttons/b2.png";
+    public static final String MENU_BUTTON3 = "/buttons/b3.png";
+    public static final String MENU_BUTTON4 = "/buttons/b4.png";
+    public static final String MENU_BUTTON5 = "/buttons/b5.png";
+    public static final String MENU_BUTTON6 = "/buttons/b6.png";
+
+    public static final String URM_BUTTON = "/urm_buttons.png";
+    public static final String HOME_BUTTON = "/buttons/urm_b3.png";
+    public static final String BACK_BUTTON = "/buttons/urm_b2.png";
+    public static final String VOLUME_BUTTON = "/buttons/volume_buttons.png";
+    public static final String VOLUME_BAR = "/buttons/volume_bar.png";
+    public static final String SETTING_BG = "/options_background.png";
     public static final String TABLE_PICK = "/choose_charactersv2.png";
 
     public static final String BG_FIGHTER = "/fighterBg.png";
