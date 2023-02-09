@@ -55,6 +55,7 @@ public class Game implements Runnable{
     private void initClass() {
         audioPlayer = new AudioPlayer();
         audioPlayer.setVolume(0.9f);
+        audioPlayer.playMenuSong();
 
         menu = new Menu(this);
         playing = new Playing(this);

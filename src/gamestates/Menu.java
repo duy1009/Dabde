@@ -1,6 +1,5 @@
 package gamestates;
 
-import audio.AudioPlayer;
 import main.Game;
 import ui.Button;
 import utilz.LoadSave;
@@ -31,7 +30,6 @@ public class Menu extends State implements StateMethods{
     public Menu(Game game) {
         super(game);
         loadButton();
-        audioPlayer.playMenuSong();
         loadBg();
     }
 

@@ -4,7 +4,7 @@ import main.Game;
 import ui.Button;
 import ui.ListTickBox;
 import ui.ScrollBar;
-import ui.VolumeButton;
+
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -28,13 +28,13 @@ public class Setting extends State implements StateMethods{
         super(game);
         loadButton();
         loadBG();
-        audioPlayer.playMenuSong();
     }
 
     private void loadButton() {
         buttons[0] = new Button((int)(Game.GAME_WIDTH*0.1),(int)(0.85*Game.GAME_HEIGHT),URM_SIZE, URM_SIZE, HOME_BUTTON,GameState.MENU );
         buttons[1] = new Button((int)(Game.GAME_WIDTH*0.9),(int)(0.85*Game.GAME_HEIGHT),URM_SIZE, URM_SIZE, BACK_BUTTON,GameState.MENU );
         volumeButton = new ScrollBar((int)(Game.GAME_WIDTH*0.5), (int)(0.68*Game.GAME_HEIGHT), SLIDER_WIDTH, VOLUME_HEIGHT);
+        volumeButton.setValue(80);
         listTickBox = new ListTickBox((int)(Game.GAME_WIDTH*0.52), (int)(Game.GAME_HEIGHT*0.4), 3,TICK_BOX_SIZE, TICK_BOX_DISTANCE, false);
         listTickBox.Tick(1);
     }

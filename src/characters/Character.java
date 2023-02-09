@@ -148,14 +148,7 @@ public abstract class Character extends Entity{
             case 2:
                 playerAction = DOWN;
                 break;
-//            case 3:
-//                playerAction = SKILL1;
-//            case 4:
-//                playerAction = SKILL2;
-//            case 5:
-//                playerAction = SKILL3;
-//            case 6:
-//                playerAction = SKILL4;
+
         }
         if( inAir){
             if(airSpeed<0)
@@ -268,7 +261,6 @@ public abstract class Character extends Entity{
         airSpeed = jumpSpeed;
     }
     private void standUp(){
-//        this.playerSpeed = PLAYER_SPEED_DEFAULT*Game.SCALE;
         changeSpeed(1/RATIO_SPEED_DOWN);
         if(this.hitBox.height != heightHitBoxNotDown){
             this.hitBox.y -= heightHitBoxNotDown - heightHitBoxDown;

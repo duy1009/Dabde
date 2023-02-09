@@ -45,7 +45,6 @@ public class CharacterPicker extends State implements StateMethods{
         loadBGCharacter();
         pickTable = LoadSave.GetSpriteAtlas(TABLE_PICK);
         player = game.getPlaying().getPlayer();
-        audioPlayer.playMenuSong();
     }
 
     private void loadButton() {
@@ -82,8 +81,7 @@ public class CharacterPicker extends State implements StateMethods{
 
         player[0].setParameter( 450f,100f,0, keyBroad_player_1);
         player[1].setParameter(1000f,10f, 1,keyBroad_player_2);
-//        player[0] = new Pirate(1000f,10f, 0,keyBroad_player_1, player, game.getPlaying().getObj());
-//        player[1] = new Fighter(450f,100f, 1,keyBroad_player_2, player);
+
         player[1].setStatusBarFlip(true);
     }
     private Character pick(int character){
@@ -161,14 +159,7 @@ public class CharacterPicker extends State implements StateMethods{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-//        for(MenuButton mb: buttons){
-//            if(isIn(e, mb)){
-//                if(mb.isMousePressed()){
-//                    mb.applyGameState();
-//                }
-//                break;
-//            }
-//        }
+
         if(isIn(e, buttons[0])) {
             if (buttons[0].isMousePressed()) {
                 p1 = pTemp;

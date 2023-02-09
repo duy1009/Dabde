@@ -15,7 +15,6 @@ public class LevelManager {
     private BufferedImage back_ground;
     public LevelManager(Game game){
         this.game = game;
-//        levelSprite = LoadSave.GetSpriteAtlas(LEVEL_ATLAS);
         importOutSide();
         levelOne = new Level(LoadSave.GetLvlData(MAP1));
         back_ground = LoadSave.GetSpriteAtlas(BACKGROUND);

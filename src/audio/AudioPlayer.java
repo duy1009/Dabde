@@ -28,14 +28,13 @@ public class AudioPlayer {
 
     private Clip[] songs, effects;
     private int currentSongId;
-    private float volume = 0.5f;
+    private float volume = 0.8f;
     private boolean songMute, effectMute;
     private Random rand = new Random();
 
     public AudioPlayer() {
         loadSongs();
         loadEffects();
-        playSong(MENU_1);
     }
 
     private void loadSongs() {
@@ -85,18 +84,16 @@ public class AudioPlayer {
             songs[currentSongId].stop();
     }
 
-    public void setLevelSong(int lvlIndex) {
-        if (lvlIndex % 2 == 0)
-            playSong(LEVEL_1);
-        else
-            playSong(LEVEL_2);
-    }
 
-    public void lvlCompleted() {
+    public void playRandomSong(){
+        int start = 3;
+        start += rand.nextInt(3);
+        this.stopSong();
         stopSong();
-        playEffect(LVL_COMPLETED);
+        currentSongId = start;
+        updateSongVolume();
+        songs[currentSongId].setMicrosecondPosition(0);
     }
-
     public void playAttackSound() {
         int start = 4;
         start += rand.nextInt(3);

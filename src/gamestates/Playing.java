@@ -39,9 +39,7 @@ public class Playing extends State implements StateMethods{
     }
     public void initClass(){
         levelManager = new LevelManager(game);
-//        initPlayer();
         Character.loadMapData(levelManager.getLevelOne().getLevelData());
-//        audioPlayer.playPlayingSong();
         obj = new Vector<>();
     }
     public Character[] getPlayer(){return this.player;}
