@@ -22,6 +22,7 @@ public class Game implements Runnable{
     private Setting setting;
     private AudioPlayer audioPlayer;
     private CharacterPicker characterPicker;
+    private EndGame endGame;
     private int FPS_SET = 60;
     private final int UPS_SET = 150;
     public final static int TILES_DEFAULT_SIZE = 32;
@@ -61,6 +62,7 @@ public class Game implements Runnable{
         playing = new Playing(this);
         characterPicker = new CharacterPicker(this);
         setting = new Setting(this);
+        endGame = new EndGame(this);
     }
 
     private void startGameLoop(){
@@ -118,6 +120,9 @@ public class Game implements Runnable{
             case PICK:
                 characterPicker.update();
                 break;
+            case ENDGAME:
+                endGame.update();
+                break;
             default:
                 break;
         }
@@ -136,6 +141,10 @@ public class Game implements Runnable{
                 break;
             case OPTIONS:
                 setting.draw(g);
+                break;
+            case ENDGAME:
+                endGame.draw(g);
+                break;
             default:
                 break;
         }
@@ -155,6 +164,9 @@ public class Game implements Runnable{
             case OPTIONS:
                 setting.draw2(g);
                 break;
+            case ENDGAME:
+                endGame.draw2(g);
+                break;
             default:
                 break;
         }
@@ -166,5 +178,6 @@ public class Game implements Runnable{
     public AudioPlayer getAudioPlayer(){return  audioPlayer;}
     public CharacterPicker getPick(){return characterPicker;}
     public Setting getOption(){return setting;}
+    public EndGame getEndGame(){return endGame;}
     public void setFPS(int value){this.FPS_SET = value;}
 }

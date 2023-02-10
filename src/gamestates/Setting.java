@@ -123,14 +123,11 @@ public class Setting extends State implements StateMethods{
                 mb.setMouseOver(true);
                 break;
             }
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            GameState.state = GameState.PLAYING;
-        }
+
     }
 
     @Override
