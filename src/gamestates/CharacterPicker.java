@@ -62,19 +62,19 @@ public class CharacterPicker extends State implements StateMethods{
                 KeyEvent.VK_S,
                 KeyEvent.VK_A,
                 KeyEvent.VK_D,
-                KeyEvent.VK_G,
-                KeyEvent.VK_T,
-                KeyEvent.VK_Y,
-                KeyEvent.VK_U};
+                KeyEvent.VK_C,
+                KeyEvent.VK_V,
+                KeyEvent.VK_B,
+                KeyEvent.VK_N};
         int[] keyBroad_player_2 = {
                 KeyEvent.VK_UP,
                 KeyEvent.VK_DOWN,
                 KeyEvent.VK_LEFT,
                 KeyEvent.VK_RIGHT,
-                KeyEvent.VK_NUMPAD1,
-                KeyEvent.VK_NUMPAD4,
-                KeyEvent.VK_NUMPAD5,
-                KeyEvent.VK_NUMPAD6};
+                KeyEvent.VK_U,
+                KeyEvent.VK_I,
+                KeyEvent.VK_O,
+                KeyEvent.VK_P};
 
         player[0] = pick(p1);
         player[1] = pick(p2);
