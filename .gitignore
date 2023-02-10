@@ -27,3 +27,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+.idea/vcs.xml
+.idea/workspace.xml
+Dabde_v1.iml
