@@ -35,7 +35,7 @@ public class Pirate extends Character{
     private Rectangle2D.Float skill4Box = new Rectangle2D.Float();
     private int flipWSkill2 = 1, flipXSkill2 = 0;
     private boolean activateAttackBox = false, activateBox2 = false, activateBox3 = false, activateBox4 = false;
-    private boolean firstUpdateSkill1 = false, firstUpdateSkill2 = false, firstUpdateSkill3 = false,firstUpdateSkill4 = false;
+
     private boolean firstEndSkill2;
     private boolean firstEndSkill4;
     private int applyAniSkill4 = 0;
@@ -51,7 +51,7 @@ public class Pirate extends Character{
                 keyBroad_player,
                 PLAYER_2_ATLAS,
                 8, 8);
-        super.setAniAction(0,1,2,7,3);
+        super.setAniAction(0,1,2,7,3, 1);
         numOfPlayer =numberOfPlayer;
         this.obj = obj;
         this.player = player;
@@ -65,10 +65,12 @@ public class Pirate extends Character{
                 null,
                 PLAYER_2_ATLAS,
                 8, 8);
-        super.setAniAction(0,1,2,7,3);
+        super.setAniAction(0,1,2,7,3, 6);
         this.obj = obj;
         this.player = player;
         this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
+        for (int i=0;i<4;i++)
+            loadSkillBox.getLoadBox(i).setRecoverTime(this.getSkillRecoveryTime(i+1));
     }
 
 
@@ -109,10 +111,10 @@ public class Pirate extends Character{
 
     private void updateSkill1(){
         if(skill_1){
-            if(firstUpdateSkill1){
+            if(firstUpdateSkill[0]){
                 aniSpeed = 15; // animation faster
                 activateAttackBox = true;
-                firstUpdateSkill1 = false;
+                firstUpdateSkill[0] = false;
             }
             if (activateAttackBox){
                 attackBox.width = 45*Game.SCALE;
@@ -137,26 +139,26 @@ public class Pirate extends Character{
     }
     private void updateSkill2(){
         if(skill_2){
-            if(firstUpdateSkill2){
+            if(firstUpdateSkill[1]){
                 changeSpeed(RATIO_SKILL_2);
-                firstUpdateSkill2 = false;
+                firstUpdateSkill[1] = false;
             }
         }
     }
     private void updateSkill3(){
         if(skill_3){
-            if(firstUpdateSkill3){
+            if(firstUpdateSkill[2]){
                 Traps newTrap = new Traps(hitBox.x, hitBox.y,
                         0f,0f,25f,21f,
                         trapAni, numOfPlayer, player, FlipW, mapData);
                 this.obj.add(newTrap);
-                firstUpdateSkill3 = false;
+                firstUpdateSkill[2] = false;
             }
         }
     }
     private void updateSkill4(){
         if(skill_4){
-            if(firstUpdateSkill4){
+            if(firstUpdateSkill[3]){
                 if(FlipW == 1){
                     indX1 = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1);
                     indX2 = (int)((hitBox.x+hitBox.width)/Game.TILES_SIZE + 1)+1;
@@ -172,7 +174,7 @@ public class Pirate extends Character{
 
                 if(!createIceBlock(indX1, indY1))
                     preTimeSkill4 = 0;
-                firstUpdateSkill4 = false;
+                firstUpdateSkill[3] = false;
             }
             else if(skill4Tick == 0){
                 createIceBlock(indX2, indY2);
@@ -208,9 +210,10 @@ public class Pirate extends Character{
         long currentTime = System.currentTimeMillis();
 
         if(val && currentTime - preTimeSkill1 >= SKILL_1_RECOVERY_TIME) {
-            firstUpdateSkill1 = true;
+            firstUpdateSkill[0] = true;
             skill_1 = true;
             preTimeSkill1 = System.currentTimeMillis();
+            loadSkillBox.getLoadBox(0).reload();
         }
     }
     @Override
@@ -218,9 +221,10 @@ public class Pirate extends Character{
         long currentTime = System.currentTimeMillis();
         if(val && currentTime - preTimeSkill2 >=SKILL_2_RECOVERY_TIME) {
             skill_2 = true;
-            firstUpdateSkill2 = true;
+            firstUpdateSkill[1] = true;
             firstEndSkill2 = true;
             preTimeSkill2 = System.currentTimeMillis();
+            loadSkillBox.getLoadBox(1).reload();
         }
     }
     @Override
@@ -228,9 +232,9 @@ public class Pirate extends Character{
         long currentTime = System.currentTimeMillis();
         if(val && currentTime - preTimeSkill3 >=SKILL_3_RECOVERY_TIME) {
             skill_3 = true;
-            firstUpdateSkill3 = true;
+            firstUpdateSkill[2] = true;
             preTimeSkill3 = System.currentTimeMillis();
-
+            loadSkillBox.getLoadBox(2).reload();
         }
     }
     @Override
@@ -238,11 +242,12 @@ public class Pirate extends Character{
         long currentTime = System.currentTimeMillis();
         if(val && currentTime - preTimeSkill4 >=SKILL_4_RECOVERY_TIME) {
             skill_4 = true;
-            firstUpdateSkill4 = true;
+            firstUpdateSkill[3] = true;
             firstEndSkill4 = true;
             applyAniSkill4 = aniSpeed*4;
             skill4Tick = SKILL_4_TICK_DEFAULT;
             preTimeSkill4 = System.currentTimeMillis();
+            loadSkillBox.getLoadBox(3).reload();
         }
     }
     @Override
@@ -263,5 +268,26 @@ public class Pirate extends Character{
     protected void renderSkill(Graphics g,int xLvlOffset,int yLvlOffset) {
 //        if(activateAttackBox)
 //            renderAttackBox(g, xLvlOffset, yLvlOffset);
+    }
+    @Override
+    public long getSkillRecoveryTime(int skill){
+        long time = 0;
+        switch (skill){
+            case 1:
+                time = SKILL_1_RECOVERY_TIME;
+                break;
+            case 2:
+                time = SKILL_2_RECOVERY_TIME;
+                break;
+            case 3:
+                time = SKILL_3_RECOVERY_TIME;
+                break;
+            case 4:
+                time = SKILL_4_RECOVERY_TIME;
+                break;
+            default:
+                break;
+        }
+        return time;
     }
 }

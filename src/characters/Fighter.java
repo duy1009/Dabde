@@ -25,7 +25,7 @@ public class Fighter extends Character {
     private static final int DEFAULT_WIDTH_KUNAI = (int)(70*Game.SCALE);
     private static final int DEFAULT_HEIGHT_KUNAI = (int)(70*Game.SCALE);
     private long preTimeSkill1 = 0, preTimeSkill2 = 0, preTimeSkill3 = 0, preTimeSkill4 = 0;
-    private boolean firstUpdateSkill1 = false, firstUpdateSkill2 = false, firstUpdateSkill3 = false,firstUpdateSkill4 = false;
+
     private boolean activateAttackBox = false, activateBox2 = false, activateBox3 = false, activateBox4 = false;
     private boolean firstEndSkill4;
     private int flipWSkill2 = 1, flipXSkill2 = 0;
@@ -45,7 +45,7 @@ public class Fighter extends Character {
                 keyBroad_player,
                 PLAYER_1_ATLAS,
                 9, 10);
-        super.setAniAction(2, 5, 5, 7, 3);
+        super.setAniAction(2, 5, 5, 7, 3, 1);
         numOfPlayer = numberOfPlayer;
         initAttackBox();
         this.player = player;
@@ -58,11 +58,13 @@ public class Fighter extends Character {
                 null,
                 PLAYER_1_ATLAS,
                 9, 10);
-        super.setAniAction(2, 5, 5, 7, 3);
+        super.setAniAction(2, 5, 5, 7, 3, 1);
         initAttackBox();
         this.player = player;
         kunai = LoadSave.GetSpriteAtlas("/kunai.png");
         flash = LoadSave.GetSpriteAtlas("/Skill3.png");
+        for (int i=0;i<4;i++)
+            loadSkillBox.getLoadBox(i).setRecoverTime(this.getSkillRecoveryTime(i+1));
     }
     private void initAttackBox(){
         attackBox.width =0;
@@ -104,10 +106,10 @@ public class Fighter extends Character {
     }
     private void updateSkill1(){
         if(skill_1){
-            if(firstUpdateSkill1){
+            if(firstUpdateSkill[0]){
                 aniSpeed = 8; // animation faster
                 activateAttackBox = true;
-                firstUpdateSkill1 = false;
+                firstUpdateSkill[0] = false;
             }
             if (activateAttackBox){
                 attackBox.width = 30*Game.SCALE;
@@ -132,7 +134,7 @@ public class Fighter extends Character {
     }
     private void updateSkill2(){
         if(skill_2) {
-            if (firstUpdateSkill2) {
+            if (firstUpdateSkill[1]) {
                 skill2Box.width = 42 * Game.SCALE;
                 skill2Box.height = 16 * Game.SCALE;
                 skill2Box.y = hitBox.y + 3 * Game.SCALE;
@@ -148,7 +150,7 @@ public class Fighter extends Character {
                     flipXSkill2 = 0;
                 }
 
-                firstUpdateSkill2 = false;
+                firstUpdateSkill[1] = false;
                 activateBox2 = true;
             }
             if (activateBox2) {
@@ -188,13 +190,13 @@ public class Fighter extends Character {
 
     private void updateSkill3(){
         if (skill_3) {
-            if (firstUpdateSkill3){
+            if (firstUpdateSkill[2]){
                 if (!IsSolidBox(skill2Box.x+1, skill2Box.y-20*Game.SCALE, hitBox.width, hitBox.height, mapData)) {
                     skill3X = (int)(hitBox.x-xDrawOffset);
                     skill3Y = (int)(hitBox.y-yDrawOffset);
                     hitBox.x = skill2Box.x+1;
                     hitBox.y = skill2Box.y-20*Game.SCALE;
-                    firstUpdateSkill3 = false;
+                    firstUpdateSkill[2] = false;
                     skill_2 = false;
                 }else{
                     preTimeSkill3 = 0;
@@ -204,10 +206,10 @@ public class Fighter extends Character {
     }
     private void updateSkill4(){
         if(skill_4){
-            if(firstUpdateSkill4){
+            if(firstUpdateSkill[3]){
                 aniSpeed = 25; // animation faster
                 activateBox4 = true;
-                firstUpdateSkill4 = false;
+                firstUpdateSkill[3] = false;
 //                playerSpeed = PLAYER_SPEED_DEFAULT/2*Game.SCALE;
                 changeSpeed(0.5f);
             }
@@ -285,9 +287,10 @@ public class Fighter extends Character {
         long currentTime = System.currentTimeMillis();
 
         if(val && currentTime - preTimeSkill1 >= SKILL_1_RECOVERY_TIME) {
-            firstUpdateSkill1 = true;
+            firstUpdateSkill[0] = true;
             skill_1 = true;
             preTimeSkill1 = System.currentTimeMillis();
+            loadSkillBox.getLoadBox(0).reload();
         }
     }
     @Override
@@ -295,8 +298,9 @@ public class Fighter extends Character {
         long currentTime = System.currentTimeMillis();
         if(val && currentTime - preTimeSkill2 >=SKILL_2_RECOVERY_TIME) {
             skill_2 = true;
-            firstUpdateSkill2 = true;
+            firstUpdateSkill[1] = true;
             preTimeSkill2 = System.currentTimeMillis();
+            loadSkillBox.getLoadBox(1).reload();
         }
     }
     @Override
@@ -304,10 +308,11 @@ public class Fighter extends Character {
         long currentTime = System.currentTimeMillis();
         if(val && currentTime - preTimeSkill3 >=SKILL_3_RECOVERY_TIME) {
             skill_3 = true;
-            firstUpdateSkill3 = true;
+            firstUpdateSkill[2] = true;
             if(skill_2) { // if skill2 do not work, skill_3 will not work
                 preTimeSkill3 = System.currentTimeMillis();
             }
+            loadSkillBox.getLoadBox(2).reload();
         }
     }
     @Override
@@ -315,9 +320,31 @@ public class Fighter extends Character {
         long currentTime = System.currentTimeMillis();
         if(val && currentTime - preTimeSkill4 >=SKILL_4_RECOVERY_TIME) {
             skill_4 = true;
-            firstUpdateSkill4 = true;
+            firstUpdateSkill[3] = true;
             firstEndSkill4 = true;
             preTimeSkill4 = System.currentTimeMillis();
+            loadSkillBox.getLoadBox(3).reload();
         }
+    }
+    @Override
+    public long getSkillRecoveryTime(int skill){
+        long time = 0;
+        switch (skill){
+            case 1:
+                time = SKILL_1_RECOVERY_TIME;
+                break;
+            case 2:
+                time = SKILL_2_RECOVERY_TIME;
+                break;
+            case 3:
+                time = SKILL_3_RECOVERY_TIME;
+                break;
+            case 4:
+                time = SKILL_4_RECOVERY_TIME;
+                break;
+            default:
+                break;
+        }
+        return time;
     }
 }

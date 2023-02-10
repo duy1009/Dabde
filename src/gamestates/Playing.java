@@ -7,6 +7,8 @@ import characters.Pirate;
 import characters.skill.Objection;
 import levels.LevelManager;
 import main.Game;
+import ui.LoadBox;
+import ui.LoadSkill;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -32,6 +34,8 @@ public class Playing extends State implements StateMethods{
     private int maxTilesOffsetY = lvlTileHigh-Game.TILES_IN_HEIGHT;
     private int maxLvlOffsetX = maxTilesOffsetX*Game.TILES_SIZE;
     private int maxLvlOffsetY = maxTilesOffsetY*Game.TILES_SIZE;
+//    private LoadSkill loadSkillP1, loadSkillP2;
+
     private Vector<Objection> obj;
     public Playing(Game game) {
         super(game);
@@ -42,6 +46,7 @@ public class Playing extends State implements StateMethods{
         Character.loadMapData(levelManager.getLevelOne().getLevelData());
         obj = new Vector<>();
     }
+
     public Character[] getPlayer(){return this.player;}
 
     @Override
@@ -55,8 +60,21 @@ public class Playing extends State implements StateMethods{
         levelManager.update();
         checkCloseToBorder();
         checkCloseToBorder2();
+        checkEndGame();
     }
 
+    private void checkEndGame(){
+        for(int i=0;i<player.length ;i++){
+            if(player[i].isDead()){
+                if(i==0)
+                    game.getEndGame().setP1IsWin(false);
+                else if(i==1)
+                    game.getEndGame().setP1IsWin(true);
+                GameState.state = GameState.ENDGAME;
+            }
+        }
+
+    }
     @Override
     public void draw(Graphics g) {
         levelManager.draw(g, xLvlOffset, yLvlOffset);
@@ -66,6 +84,7 @@ public class Playing extends State implements StateMethods{
             if(i.isActivateAni())
                 i.render(g, xLvlOffset, yLvlOffset);
         }
+
     }
     @Override
     public void draw2(Graphics g){

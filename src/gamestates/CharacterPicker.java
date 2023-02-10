@@ -84,6 +84,7 @@ public class CharacterPicker extends State implements StateMethods{
 
         player[1].setStatusBarFlip(true);
     }
+
     private Character pick(int character){
         Character chr;
         switch (character){

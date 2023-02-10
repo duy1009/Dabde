@@ -76,6 +76,7 @@ public interface Constants {
     public static final String BG_FIGHTER = "/fighterBg.png";
     public static final String BG_PIRATE = "/pirateBg.png";
     public static final String BG_MENU = "/Bg_menu.jpg";
+    public static final String BG_SETTING = "/bg_setting.png";
     public static final String DABDE = "/Dabde.png";
     public static final String P1_IMAGE = "/player1.png";
     public static final String P2_IMAGE = "/Player2.png";

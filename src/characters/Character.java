@@ -1,7 +1,8 @@
 package characters;
 
-import gamestates.GameState;
 import main.Game;
+import ui.LoadBox;
+import ui.LoadSkill;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -20,6 +21,7 @@ public abstract class Character extends Entity{
     public int JUMP = 3;
     public int FALLING = 3;
     public int DOWN = 4;
+    public int DEAD = 5;
 
     protected int moving, playerAction = IDLE, playerDir=-1;
 
@@ -27,6 +29,7 @@ public abstract class Character extends Entity{
     private int up_ctrl, down_ctrl, left_ctrl, right_ctrl; // controller key
     protected boolean skill_1 = false, skill_2 = false, skill_3 = false, skill_4 = false;
     protected int skill_1_ctrl, skill_2_ctrl, skill_3_ctrl, skill_4_ctrl;
+    protected boolean[] firstUpdateSkill = {false, false, false, false};
     private boolean down = false, left = false, right = false, jump =false;
 
     // Animation
@@ -72,6 +75,8 @@ public abstract class Character extends Entity{
     private int healthWidth = healthBarWidth;
     private float HB_width=0, HB_height=0;
     protected int numOfPlayer = 0;
+    private boolean alive = true;
+    protected LoadSkill loadSkillBox;
     public Character(float x, float y,int width, int height,
                           float HB_x, float HB_y,float HB_width, float HB_height,
                           int[] ctrl, // {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D}
@@ -93,12 +98,15 @@ public abstract class Character extends Entity{
 
         heightHitBoxDown = 0.5f*hitBox.height;
         heightHitBoxNotDown = hitBox.height;
+        loadSkillBox = new LoadSkill(120,60, 4, 30, 5, false);
 
     }
     public void setParameter(float x, float y, int numberOfPlayer, int[] keyBroad_player){
         initHitBox(x, y, HB_width* width/ chr_w, HB_height* height/ chr_h);
         this.numOfPlayer = numberOfPlayer;
         setControl(keyBroad_player);
+        if(numOfPlayer == 1)
+            loadSkillBox.setPos(Game.GAME_WIDTH - 100,60);
     }
 
     private void loadAnimation(String path, boolean addFlip) {
@@ -122,8 +130,10 @@ public abstract class Character extends Entity{
             updatePos();
         updateAnimationTick();
         setAnimations();
-        updateSkill();
+        if(!lockMoving)
+            updateSkill();
         updateHealthBar();
+        loadSkillBox.update();
     }
     public void updateAnimationTick() {
         aniTick++;
@@ -161,8 +171,8 @@ public abstract class Character extends Entity{
             restAniTick();
         }
     }
-    public void setAniAction(int idle, int moving, int up, int down, int fall){
-        IDLE = idle; MOVING=moving ; JUMP = up; DOWN = down; FALLING = fall;
+    public void setAniAction(int idle, int moving, int up, int down, int fall, int dead){
+        IDLE = idle; MOVING=moving ; JUMP = up; DOWN = down; FALLING = fall; DEAD = dead;
     }
     public void restAniTick(){
         aniTick = 0;
@@ -178,6 +188,7 @@ public abstract class Character extends Entity{
             g.setColor(Color.red);
             g.fillRect(healthBarXStart + statusBarX, healthBarYStart + statusBarY, healthWidth, healthBarHeight);
         }
+        loadSkillBox.draw(g);
 
     }
     public void render(Graphics g, int xLvlOffset, int yLvlOffset){
@@ -318,7 +329,7 @@ public abstract class Character extends Entity{
         currentHealth += val;
         if (currentHealth <0){
             currentHealth=0;
-            GameState.state = GameState.MENU;
+            alive = false;
         }
 
         else if(currentHealth > maxHealth)
@@ -361,6 +372,20 @@ public abstract class Character extends Entity{
     protected void renderSkill(Graphics g, int xLvlOffset, int yLvlOffset) {
     }
     protected void updateSkill(){}
+    public boolean isDead(){
+        return !alive;
+    }
+    public void setPlayerAction(int action){
+        playerAction = action;
+    }
+    public void setLockMoving(boolean val){lockMoving = val;}
+    public long getSkillRecoveryTime(int skill){
+        System.out.println("this is override function");
+        return 0;
+    }
 
+    public boolean[] getFirstUpdateSkill() {
+        return firstUpdateSkill;
+    }
 }
 

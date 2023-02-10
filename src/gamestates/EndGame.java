@@ -77,8 +77,11 @@ public class EndGame extends State implements StateMethods{
     @Override
     public void mouseReleased(MouseEvent e) {
         if(isIn(e, home)){
-            if(home.isMousePressed())
+            if(home.isMousePressed()){
                 home.applyGameState();
+                home.resetBools();
+            }
+
         }
     }
 
@@ -98,5 +101,8 @@ public class EndGame extends State implements StateMethods{
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+    public void setP1IsWin(boolean value){
+        p1Win = value;
     }
 }

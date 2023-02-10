@@ -19,7 +19,7 @@ import static utilz.Constants.UI.VolumeButtons.*;
 public class Setting extends State implements StateMethods{
     private Button[] buttons = new Button[2];
     private ScrollBar volumeButton;
-    private BufferedImage bg;
+    private BufferedImage bg, bgSetting;
     private ListTickBox listTickBox;
 
     private int xBGPos, yBGPos, bGWidth, bGHeight;
@@ -44,6 +44,7 @@ public class Setting extends State implements StateMethods{
         bGHeight = (int)(bg.getHeight()*Game.SCALE);
         xBGPos = (Game.GAME_WIDTH-bGWidth)/2;
         yBGPos = (Game.GAME_HEIGHT-bGHeight)/2;
+        bgSetting = LoadSave.GetSpriteAtlas(BG_SETTING);
     }
 
     @Override
@@ -54,6 +55,7 @@ public class Setting extends State implements StateMethods{
 
     @Override
     public void draw(Graphics g) {
+        g.drawImage(bgSetting,0,0,Game.GAME_WIDTH, Game.GAME_HEIGHT,null);
         g.drawImage(bg,xBGPos,yBGPos,bGWidth,bGHeight,null );
         for(Button mb: buttons)
             mb.draw(g);
