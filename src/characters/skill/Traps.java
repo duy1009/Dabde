@@ -22,8 +22,8 @@ public class Traps extends Objection{
     private int playerEffect =0;
     private final int BASIC_DAME = 50;
     private final int TIME_PLUS_DAME = 1000;
-    private final int DAME_PLUS = 20;
-    private final int DAME_MAX = 200;
+    private final int DAME_PLUS = 10;
+    private final int DAME_MAX = 180;
     private int dame = BASIC_DAME;
     private long preTimeAddDame = 0;
     public Traps(float x, float y,

@@ -44,6 +44,7 @@ public class Pirate extends Character{
     private int indX1=-1, indY1=-1, indX2=-1, indY2=-1, indX3=-1, indY3=-1;
     private final int SKILL_4_TICK_DEFAULT = 60;
     private int skill4Tick = SKILL_4_TICK_DEFAULT;
+    private float buffDameRatio = 1f;
 
     public Pirate(float x, float y, int numberOfPlayer, int[] keyBroad_player, Character[] player, Vector<Objection> obj){
         super(x, y , 126,80,
@@ -99,6 +100,7 @@ public class Pirate extends Character{
         if(!skill_2 && firstEndSkill2){
             changeSpeed(1/RATIO_SKILL_2);
             firstEndSkill2 = false;
+            buffDameRatio = 1f;
         }
         if(!skill_1){
             aniSpeed = ANI_SPEED_DEFAULT;
@@ -129,7 +131,7 @@ public class Pirate extends Character{
                         continue;
                     if (boxCollision(attackBox, player[i].getHitBox())) {
                         System.out.println(attackBox.x + " " + attackBox.y + "-" + hitBox.x + "" + hitBox.y);
-                        player[i].addHP(-80);
+                        player[i].addHP((int)(-80*buffDameRatio));
                         activateAttackBox = false;
                     }
                 }
@@ -141,6 +143,7 @@ public class Pirate extends Character{
         if(skill_2){
             if(firstUpdateSkill[1]){
                 changeSpeed(RATIO_SKILL_2);
+                buffDameRatio = 1.5f;
                 firstUpdateSkill[1] = false;
             }
         }
