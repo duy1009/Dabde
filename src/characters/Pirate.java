@@ -18,7 +18,7 @@ public class Pirate extends Character{
     private final int ICE_BLOCK = 47;
     private final int AIR_BLOCK = 11;
     private int NORMAL_ATTACK = 4;
-    private int SKILL_1_RECOVERY_TIME = 350;
+    private int SKILL_1_RECOVERY_TIME = 450;
     private int SKILL_2_RECOVERY_TIME = 10000;
     private int SKILL_3_RECOVERY_TIME = 10000;
     private int SKILL_4_RECOVERY_TIME = 5000;
