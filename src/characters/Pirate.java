@@ -57,7 +57,7 @@ public class Pirate extends Character{
         this.obj = obj;
         this.player = player;
 
-        this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
+        this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,2);
 
     }
     public Pirate(Character[] player, Vector<Objection> obj){
@@ -69,7 +69,7 @@ public class Pirate extends Character{
         super.setAniAction(0,1,2,7,3, 6);
         this.obj = obj;
         this.player = player;
-        this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,1);
+        this.trapAni = LoadSave.loadArrayAni_2D(TRAP_ATLAS, 4,2);
         for (int i=0;i<4;i++)
             loadSkillBox.getLoadBox(i).setRecoverTime(this.getSkillRecoveryTime(i+1));
     }
@@ -130,7 +130,6 @@ public class Pirate extends Character{
                     if (i == numOfPlayer)
                         continue;
                     if (boxCollision(attackBox, player[i].getHitBox())) {
-                        System.out.println(attackBox.x + " " + attackBox.y + "-" + hitBox.x + "" + hitBox.y);
                         player[i].addHP((int)(-80*buffDameRatio));
                         activateAttackBox = false;
                     }

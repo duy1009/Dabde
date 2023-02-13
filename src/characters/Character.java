@@ -77,7 +77,7 @@ public abstract class Character extends Entity{
     protected int numOfPlayer = 0;
     private boolean alive = true;
     private long preLockMove = 0;
-    private long timeLockMove = 500;
+    private long timeLockMove = 120;
     protected LoadSkill loadSkillBox;
     public Character(float x, float y,int width, int height,
                           float HB_x, float HB_y,float HB_width, float HB_height,
@@ -144,7 +144,6 @@ public abstract class Character extends Entity{
         if(System.currentTimeMillis() - preLockMove > timeLockMove){
             lockMoving = false;
         }else {
-            System.out.println("AAAAA");
             lockMoving = true;
         }
     }
@@ -345,7 +344,7 @@ public abstract class Character extends Entity{
     public void addHP(int val){
         currentHealth += val;
         if(val<0){
-            lockMoving(200);
+            lockMoving(120);
         }
         if (currentHealth <0){
             currentHealth=0;

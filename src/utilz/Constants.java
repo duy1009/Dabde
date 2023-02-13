@@ -55,7 +55,7 @@ public interface Constants {
     public static final String MAP1 = "/Map2.png";
     public static final String BACKGROUND = "/bg_2.png";
     public static final String STATUS_BAR = "/health_power_bar.png";
-    public static final String TRAP_ATLAS = "/Bomb.png";
+    public static final String TRAP_ATLAS = "/Bombv2.png";
     public static final String MENU_BUTTON = "/button_atlasv2.png";
     public static final String MENU_BUTTON1 = "/buttons/b1.png";
     public static final String MENU_BUTTON2 = "/buttons/b2.png";
